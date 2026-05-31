@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getMovieFacts } from "@/lib/tmdb";
-import { readTargetToken } from "@/lib/token";
+import { getMovieFacts } from "@/lib/server/tmdbFacts";
+import { readTargetToken } from "@/lib/server/token";
 
 /**
  * POST /api/games/poster/guess

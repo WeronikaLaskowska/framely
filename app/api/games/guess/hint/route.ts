@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getMovieFacts } from "@/lib/tmdb";
-import { readTargetToken } from "@/lib/token";
-import type { Hint, HintType } from "@/lib/types";
+import { getMovieFacts } from "@/lib/server/tmdbFacts";
+import { readTargetToken } from "@/lib/server/token";
+import type { Hint, HintType } from "@/models/hint";
 
 const HINT_TYPES: HintType[] = ["cast", "decade", "studio"];
 

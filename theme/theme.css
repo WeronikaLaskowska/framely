@@ -1,0 +1,152 @@
+/* =====================================================================
+   FRAMELY — DESIGN TOKENS · single source of truth
+   ---------------------------------------------------------------------
+   This is the ONLY file to edit when changing the palette or typography
+   of the whole app. It defines:
+     1. Colour tokens (:root custom properties)
+     2. The Tailwind colour/font bridge (@theme inline)
+     3. Typography utilities consumed by the <Display>, <SectionTitle>,
+        <EmberText>, <Timecode>, <Counter> … components in common/typography
+   Components must never hardcode colours or font rules — they reference
+   the Tailwind tokens (e.g. text-fr-ember) or the typography components.
+===================================================================== */
+
+:root {
+  /* Surfaces — warm near-black "screening room" stage */
+  --fr-bg: #0a0805;
+  --fr-bg-2: #0f0c07;
+  --fr-bg-3: #15110a;
+  --fr-surface: #1a160e;
+  --fr-surface-2: #221c12;
+  --fr-surface-3: #2c2417;
+
+  /* Borders */
+  --fr-border: rgba(255, 240, 214, 0.07);
+  --fr-border-strong: rgba(255, 240, 214, 0.14);
+
+  /* Foreground / text */
+  --fr-fg: #fbf6ec;
+  --fr-fg-muted: rgba(251, 246, 236, 0.6);
+  --fr-fg-subtle: rgba(251, 246, 236, 0.4);
+
+  /* Accents — bright-yellow → gold → orange coin gradient */
+  --fr-ember: #ffab00;
+  --fr-amber: #ff8f00;
+  --fr-flame: #ffce3a;
+  --fr-gold: #ffe9a8;
+  --fr-cool: #ff7a18;
+  --fr-violet: #b45309;
+
+  /* Guess feedback — traffic-light signals (intentionally not re-themed) */
+  --fr-correct: #4ade80;
+  --fr-correct-bg: rgba(74, 222, 128, 0.14);
+  --fr-correct-border: rgba(74, 222, 128, 0.45);
+  --fr-close: #f5a524;
+  --fr-close-bg: rgba(245, 165, 36, 0.14);
+  --fr-close-border: rgba(245, 165, 36, 0.45);
+  --fr-wrong: rgba(243, 241, 249, 0.32);
+  --fr-wrong-bg: rgba(255, 255, 255, 0.025);
+  --fr-wrong-border: rgba(255, 255, 255, 0.08);
+
+  /* Radii — squared, pixel-art aesthetic */
+  --fr-radius-sm: 0px;
+  --fr-radius-md: 0px;
+  --fr-radius-lg: 0px;
+
+  --background: var(--fr-bg);
+  --foreground: var(--fr-fg);
+
+  /* Procedural film-grain textures */
+  --fr-noise-fine: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --fr-noise-coarse: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.92  0 0 0 0 0.8  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Bridge the tokens above into Tailwind utilities (bg-fr-*, text-fr-*, font-*) */
+@theme inline {
+  --color-background: var(--fr-bg);
+  --color-foreground: var(--fr-fg);
+  --color-fr-bg: var(--fr-bg);
+  --color-fr-bg-2: var(--fr-bg-2);
+  --color-fr-bg-3: var(--fr-bg-3);
+  --color-fr-surface: var(--fr-surface);
+  --color-fr-surface-2: var(--fr-surface-2);
+  --color-fr-surface-3: var(--fr-surface-3);
+  --color-fr-border: var(--fr-border);
+  --color-fr-border-strong: var(--fr-border-strong);
+  --color-fr-fg: var(--fr-fg);
+  --color-fr-fg-muted: var(--fr-fg-muted);
+  --color-fr-fg-subtle: var(--fr-fg-subtle);
+  --color-fr-ember: var(--fr-ember);
+  --color-fr-amber: var(--fr-amber);
+  --color-fr-flame: var(--fr-flame);
+  --color-fr-gold: var(--fr-gold);
+  --color-fr-cool: var(--fr-cool);
+  --color-fr-violet: var(--fr-violet);
+  --color-fr-correct: var(--fr-correct);
+  --color-fr-close: var(--fr-close);
+
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ---------------------------------------------------------------- *
+ * Typography utilities — consumed only by common/typography/*
+ * ---------------------------------------------------------------- */
+.fr-display {
+  font-family: var(--font-pixel), "Press Start 2P", var(--font-space-grotesk), monospace;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.32;
+}
+.fr-section-title {
+  font-family: var(--font-pixel), "Press Start 2P", var(--font-space-grotesk), monospace;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.35;
+  font-size: clamp(1.3rem, 3.4vw, 2.4rem);
+}
+.fr-mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+.fr-timecode {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fr-fg-subtle);
+}
+.fr-counter {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--fr-fg-subtle);
+}
+
+/* Wordmark accent gradient — animated bright yellow → gold → orange */
+.fr-ember-text {
+  background: linear-gradient(135deg, #fff1c2 0%, #ffce3a 30%, #ffab00 64%, #ff7a18 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 200%;
+  animation: fr-ember-shift 9s ease-in-out infinite;
+}
+@keyframes fr-ember-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.fr-stock-text {
+  background-image: var(--fr-noise-fine), var(--fr-noise-coarse),
+    linear-gradient(180deg, #f4f1fb 0%, #ddd3f2 55%, #b9a8dd 100%);
+  background-size: 200px 200px, 320px 320px, 100% 100%;
+  background-blend-mode: overlay, soft-light, normal;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.fr-outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(243, 241, 249, 0.55);
+}

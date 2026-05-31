@@ -1,9 +1,9 @@
-import { SpotleGenre } from "@/features/games/guess-movie/spotle-genre";
+import { SpotleGenreScreen } from "@/features/games/guess-movie/screens/SpotleGenreScreen";
 
 export const metadata = {
   title: "Framely — Spotle by Genre",
 };
 
-export default function SpotleGenrePage() {
-  return <SpotleGenre />;
-}
+const SpotleGenrePage = () => <SpotleGenreScreen />;
+
+export default SpotleGenrePage;

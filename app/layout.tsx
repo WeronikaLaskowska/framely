@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk, Press_Start_2P } from "next/font/google";
 import "./globals.css";
-import { Atmosphere } from "@/components/atmosphere";
-import { FilmRails } from "@/components/film-rails";
+import { Atmosphere } from "@/common/decoration/Atmosphere";
+import { FilmRails } from "@/common/decoration/FilmRails";
+import { QueryProvider } from "@/providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,19 +46,19 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${pressStart.variable} antialiased`}
-    >
-      <body className="min-h-dvh overflow-x-hidden bg-fr-bg text-fr-fg">
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
+  <html
+    lang="en"
+    className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${pressStart.variable} antialiased`}
+  >
+    <body className="min-h-dvh overflow-x-hidden bg-fr-bg text-fr-fg">
+      <QueryProvider>
         <Atmosphere />
         <FilmRails />
         <div className="relative z-10 flex min-h-dvh flex-col">{children}</div>
-      </body>
-    </html>
-  );
-}
+      </QueryProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;

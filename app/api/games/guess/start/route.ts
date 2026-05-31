@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { pickTargetMovieId } from "@/lib/tmdb";
-import { makeTargetToken } from "@/lib/token";
+import { pickTargetMovieId } from "@/lib/server/tmdbDiscover";
+import { makeTargetToken } from "@/lib/server/token";
 
 /**
  * POST /api/games/guess/start

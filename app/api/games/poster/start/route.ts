@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { randomPopularMovie } from "@/lib/tmdb";
-import { makeTargetToken } from "@/lib/token";
+import { randomPopularMovie } from "@/lib/server/tmdbDiscover";
+import { makeTargetToken } from "@/lib/server/token";
 
 /**
  * POST /api/games/poster/start

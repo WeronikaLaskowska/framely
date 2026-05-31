@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getHiloDeck } from "@/lib/tmdb";
+import { getHiloDeck } from "@/lib/server/tmdbHilo";
 
 /**
  * GET /api/games/higher-lower

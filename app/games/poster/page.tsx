@@ -1,9 +1,9 @@
-import { PosterGame } from "@/features/games/poster/poster-game";
+import { PosterGameScreen } from "@/features/games/poster/screens/PosterGameScreen";
 
 export const metadata = {
   title: "Framely — Poster · Name the artwork",
 };
 
-export default function PosterPage() {
-  return <PosterGame />;
-}
+const PosterPage = () => <PosterGameScreen />;
+
+export default PosterPage;
