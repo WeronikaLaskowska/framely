@@ -10,7 +10,7 @@ export const GenrePicker = ({ onPick }: { onPick: (genre: Genre) => void }) => (
     <BackLink href="/games" label="Games" />
 
     <GameHeader
-      badge="Spotle · by genre"
+      // badge="Spotle · by genre"
       title={
         <>
           Pick a <EmberText>genre</EmberText>
