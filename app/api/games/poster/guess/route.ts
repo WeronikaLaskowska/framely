@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getMovieFacts } from "@/lib/server/tmdbFacts";
-import { readTargetToken } from "@/lib/server/token";
+import { resolveTokenGuess } from "@/lib/server/resolveGuess";
 
 /**
  * POST /api/games/poster/guess
@@ -16,23 +15,11 @@ export async function POST(req: Request) {
       reveal?: boolean;
     };
 
-    const targetId = token ? readTargetToken(token) : null;
-    if (targetId === null) {
-      return NextResponse.json({ error: "Invalid game token" }, { status: 400 });
+    const result = await resolveTokenGuess(token, movieId, reveal);
+    if (!result.ok) {
+      return NextResponse.json({ error: result.error }, { status: result.status });
     }
-
-    if (reveal) {
-      const target = await getMovieFacts(targetId);
-      return NextResponse.json({ correct: false, target });
-    }
-
-    if (typeof movieId !== "number") {
-      return NextResponse.json({ error: "movieId is required" }, { status: 400 });
-    }
-
-    const correct = movieId === targetId;
-    const target = correct ? await getMovieFacts(targetId) : null;
-    return NextResponse.json({ correct, target });
+    return NextResponse.json({ correct: result.correct, target: result.target });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Guess failed";
     return NextResponse.json({ error: message }, { status: 500 });

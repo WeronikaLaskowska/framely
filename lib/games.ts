@@ -52,4 +52,14 @@ export const GAMES: GameMeta[] = [
       "Two films, one question: did the next one gross more - or score higher — than the last? Tap higher or lower, keep the chain alive and chase your longest streak.",
     accent: "cool",
   },
+  {
+    slug: "review",
+    href: "/games/review",
+    index: "005",
+    title: "Reviews",
+    tagline: "Read the verdict",
+    description:
+      "Real audience reviews, with the title blacked out. Read the verdict and name the film — each wrong guess uncovers another review to help you close in.",
+    accent: "ember",
+  },
 ];
