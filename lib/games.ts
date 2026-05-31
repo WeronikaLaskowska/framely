@@ -62,4 +62,14 @@ export const GAMES: GameMeta[] = [
       "Real audience reviews, with the title blacked out. Read the verdict and name the film — each wrong guess uncovers another review to help you close in.",
     accent: "ember",
   },
+  {
+    slug: "castle",
+    href: "/games/castle",
+    index: "006",
+    title: "Castle",
+    tagline: "Name the cast",
+    description:
+      "Just the cast, no title. Faces appear one at a time — and the more you miss, the bigger the star you're shown. Name the film before the headliner drops.",
+    accent: "cool",
+  },
 ];
