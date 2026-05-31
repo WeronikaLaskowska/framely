@@ -13,7 +13,6 @@ type HiloBoardProps = {
   onGuess: (higher: boolean) => void;
 };
 
-/** The two-poster comparison with the higher / lower controls. */
 export const HiloBoard = ({
   cfg,
   current,

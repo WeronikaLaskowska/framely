@@ -12,7 +12,6 @@ type MovieSearchOptionProps = {
   onHover: () => void;
 };
 
-/** A single suggestion row in the movie autocomplete dropdown. */
 export const MovieSearchOption = ({
   movie,
   active,

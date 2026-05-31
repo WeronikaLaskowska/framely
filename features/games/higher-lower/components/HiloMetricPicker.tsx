@@ -3,7 +3,6 @@ import { METRICS, METRIC_ORDER } from "@/features/games/higher-lower/data/metric
 import { readBest } from "@/features/games/higher-lower/data/bestStreak";
 import { GamePicker } from "@/features/games/components/GamePicker";
 
-/** Box-office vs rating selection grid shown before a run. */
 export const HiloMetricPicker = ({
   onSelect,
 }: {

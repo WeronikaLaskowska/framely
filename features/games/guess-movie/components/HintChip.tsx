@@ -2,7 +2,6 @@ import type { Hint } from "@/models/hint";
 import { tmdbImage } from "@/lib/format";
 import { Timecode } from "@/common/typography/Timecode";
 
-/** Compact persistent chip for an already-revealed hint, shown under the input. */
 export const HintChip = ({ hint }: { hint: Hint }) => {
   const photo = tmdbImage(hint.imagePath ?? null, "w185");
   return (

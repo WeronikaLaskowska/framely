@@ -26,11 +26,11 @@ export const Hero = () => (
         </p>
 
         <div className="fr-rise fr-delay-3 flex flex-wrap items-center gap-3">
-          <ButtonLink href="/games" variant="ember" className="px-6 py-3.5 text-base">
-            <Play size={17} /> Start the reel
+          <ButtonLink href="/games/guess-movie" variant="ember" className="px-6 py-3.5 text-base">
+            <Play size={17} /> Play Spotle
           </ButtonLink>
-          <ButtonLink href="/games/poster" variant="ghost" className="px-6 py-3.5 text-base">
-            Poster mode
+          <ButtonLink href="/games" variant="ghost" className="px-6 py-3.5 text-base">
+            All games
           </ButtonLink>
         </div>
 

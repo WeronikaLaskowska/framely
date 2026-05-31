@@ -4,9 +4,8 @@ import { BackLink } from "@/common/ui/BackLink";
 import { SectionTitle } from "@/common/typography/SectionTitle";
 import { EmberText } from "@/common/typography/EmberText";
 
-/** The /games picker — every game presented as a contact-sheet cell. */
 export const GamesScreen = () => (
-  <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-14 xl:px-10">
+  <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-10 sm:py-14 xl:px-10">
     <BackLink href="/" label="Back home" />
 
     <div className="fr-rise mt-10 flex flex-wrap items-end justify-between gap-4">

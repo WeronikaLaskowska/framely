@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-/** Standard "← back" navigation link used at the top of every game screen. */
 export const BackLink = ({ href, label }: { href: string; label: string }) => (
   <Link
     href={href}

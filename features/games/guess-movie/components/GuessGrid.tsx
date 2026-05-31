@@ -1,7 +1,6 @@
 import type { GuessResult } from "@/models/guess";
 import { GuessCard } from "@/features/games/guess-movie/components/GuessCard";
 
-/** The list of guessed films, newest first, each as a rich dossier card. */
 export const GuessGrid = ({ guesses }: { guesses: GuessResult[] }) => {
   if (guesses.length === 0) return null;
 

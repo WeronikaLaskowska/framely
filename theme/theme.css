@@ -1,126 +1,104 @@
 /* =====================================================================
    FRAMELY — DESIGN TOKENS · single source of truth
    ---------------------------------------------------------------------
-   This is the ONLY file to edit when changing the palette or typography
-   of the whole app. It defines:
-     1. Colour tokens (:root custom properties)
-     2. The Tailwind colour/font bridge (@theme inline)
-     3. Typography utilities consumed by the <Display>, <SectionTitle>,
-        <EmberText>, <Timecode>, <Counter> … components in common/typography
-   Components must never hardcode colours or font rules — they reference
-   the Tailwind tokens (e.g. text-fr-ember) or the typography components.
+   Every colour, radius and font is declared in the Tailwind @theme config
+   below, so they are all first-class Tailwind utilities:
+     bg-fr-*, text-fr-*, border-fr-* · rounded-fr-* · font-display/sans/mono
+   Components reference those utilities (or the typography components in
+   common/typography) and never hardcode a colour or font.
 ===================================================================== */
 
-:root {
+@theme {
   /* Surfaces — warm near-black "screening room" stage */
-  --fr-bg: #0a0805;
-  --fr-bg-2: #0f0c07;
-  --fr-bg-3: #15110a;
-  --fr-surface: #1a160e;
-  --fr-surface-2: #221c12;
-  --fr-surface-3: #2c2417;
+  --color-fr-bg: #0a0805;
+  --color-fr-bg-2: #0f0c07;
+  --color-fr-bg-3: #15110a;
+  --color-fr-surface: #1a160e;
+  --color-fr-surface-2: #221c12;
+  --color-fr-surface-3: #2c2417;
 
   /* Borders */
-  --fr-border: rgba(255, 240, 214, 0.07);
-  --fr-border-strong: rgba(255, 240, 214, 0.14);
+  --color-fr-border: rgba(255, 240, 214, 0.07);
+  --color-fr-border-strong: rgba(255, 240, 214, 0.14);
 
   /* Foreground / text */
-  --fr-fg: #fbf6ec;
-  --fr-fg-muted: rgba(251, 246, 236, 0.6);
-  --fr-fg-subtle: rgba(251, 246, 236, 0.4);
+  --color-fr-fg: #fbf6ec;
+  --color-fr-fg-muted: rgba(251, 246, 236, 0.6);
+  --color-fr-fg-subtle: rgba(251, 246, 236, 0.4);
 
   /* Accents — bright-yellow → gold → orange coin gradient */
-  --fr-ember: #ffab00;
-  --fr-amber: #ff8f00;
-  --fr-flame: #ffce3a;
-  --fr-gold: #ffe9a8;
-  --fr-cool: #ff7a18;
-  --fr-violet: #b45309;
+  --color-fr-ember: #ffab00;
+  --color-fr-amber: #ff8f00;
+  --color-fr-flame: #ffce3a;
+  --color-fr-gold: #ffe9a8;
+  --color-fr-cool: #ff7a18;
+  --color-fr-violet: #b45309;
 
   /* Guess feedback — traffic-light signals (intentionally not re-themed) */
-  --fr-correct: #4ade80;
-  --fr-correct-bg: rgba(74, 222, 128, 0.14);
-  --fr-correct-border: rgba(74, 222, 128, 0.45);
-  --fr-close: #f5a524;
-  --fr-close-bg: rgba(245, 165, 36, 0.14);
-  --fr-close-border: rgba(245, 165, 36, 0.45);
-  --fr-wrong: rgba(243, 241, 249, 0.32);
-  --fr-wrong-bg: rgba(255, 255, 255, 0.025);
-  --fr-wrong-border: rgba(255, 255, 255, 0.08);
+  --color-fr-correct: #4ade80;
+  --color-fr-correct-bg: rgba(74, 222, 128, 0.14);
+  --color-fr-correct-border: rgba(74, 222, 128, 0.45);
+  --color-fr-close: #f5a524;
+  --color-fr-close-bg: rgba(245, 165, 36, 0.14);
+  --color-fr-close-border: rgba(245, 165, 36, 0.45);
+  --color-fr-wrong: rgba(243, 241, 249, 0.32);
+  --color-fr-wrong-bg: rgba(255, 255, 255, 0.025);
+  --color-fr-wrong-border: rgba(255, 255, 255, 0.08);
 
   /* Radii — squared, pixel-art aesthetic */
-  --fr-radius-sm: 0px;
-  --fr-radius-md: 0px;
-  --fr-radius-lg: 0px;
-
-  --background: var(--fr-bg);
-  --foreground: var(--fr-fg);
-
-  /* Procedural film-grain textures */
-  --fr-noise-fine: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  --fr-noise-coarse: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.92  0 0 0 0 0.8  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --radius-fr-sm: 0px;
+  --radius-fr-md: 0px;
+  --radius-fr-lg: 0px;
 }
 
-/* Bridge the tokens above into Tailwind utilities (bg-fr-*, text-fr-*, font-*) */
+/* Fonts are injected by next/font as variables on <html>, so they must be
+   resolved inline (the alias points at the runtime variable). */
 @theme inline {
-  --color-background: var(--fr-bg);
-  --color-foreground: var(--fr-fg);
-  --color-fr-bg: var(--fr-bg);
-  --color-fr-bg-2: var(--fr-bg-2);
-  --color-fr-bg-3: var(--fr-bg-3);
-  --color-fr-surface: var(--fr-surface);
-  --color-fr-surface-2: var(--fr-surface-2);
-  --color-fr-surface-3: var(--fr-surface-3);
-  --color-fr-border: var(--fr-border);
-  --color-fr-border-strong: var(--fr-border-strong);
-  --color-fr-fg: var(--fr-fg);
-  --color-fr-fg-muted: var(--fr-fg-muted);
-  --color-fr-fg-subtle: var(--fr-fg-subtle);
-  --color-fr-ember: var(--fr-ember);
-  --color-fr-amber: var(--fr-amber);
-  --color-fr-flame: var(--fr-flame);
-  --color-fr-gold: var(--fr-gold);
-  --color-fr-cool: var(--fr-cool);
-  --color-fr-violet: var(--fr-violet);
-  --color-fr-correct: var(--fr-correct);
-  --color-fr-close: var(--fr-close);
-
-  --font-display: var(--font-space-grotesk);
+  --color-background: var(--color-fr-bg);
+  --color-foreground: var(--color-fr-fg);
+  --font-display: var(--font-pixel), "Press Start 2P", var(--font-space-grotesk), monospace;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* Procedural film-grain textures — texture inputs for the grain/stock effects,
+   not design tokens, so they stay plain custom properties. */
+:root {
+  --fr-noise-fine: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --fr-noise-coarse: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.92  0 0 0 0 0.8  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
 /* ---------------------------------------------------------------- *
  * Typography utilities — consumed only by common/typography/*
  * ---------------------------------------------------------------- */
 .fr-display {
-  font-family: var(--font-pixel), "Press Start 2P", var(--font-space-grotesk), monospace;
+  font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.32;
 }
 .fr-section-title {
-  font-family: var(--font-pixel), "Press Start 2P", var(--font-space-grotesk), monospace;
+  font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.35;
   font-size: clamp(1.3rem, 3.4vw, 2.4rem);
 }
 .fr-mono {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
 }
 .fr-timecode {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--fr-fg-subtle);
+  color: var(--color-fr-fg-subtle);
 }
 .fr-counter {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
-  color: var(--fr-fg-subtle);
+  color: var(--color-fr-fg-subtle);
 }
 
 /* Wordmark accent gradient — animated bright yellow → gold → orange */

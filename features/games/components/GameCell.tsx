@@ -8,7 +8,6 @@ import { Counter } from "@/common/typography/Counter";
 
 const TOTAL = String(GAMES.length).padStart(3, "0");
 
-/** A game presented as a film-negative "contact-sheet" cell. */
 export const GameCell = ({ game }: { game: GameMeta }) => {
   const accent = game.accent === "cool" ? "text-fr-cool" : "text-fr-flame";
   const accentBg = game.accent === "cool" ? "bg-fr-cool" : "bg-fr-flame";

@@ -8,12 +8,10 @@ export type PickerOption<T extends string> = {
   id: T;
   label: string;
   blurb: string;
-  /** Small footer line (e.g. "5×6 tiles" or "Best streak: 3"). */
   footer: ReactNode;
 };
 
 type GamePickerProps<T extends string> = {
-  /** Timecode caption above the grid. */
   caption: string;
   options: PickerOption<T>[];
   columns: 2 | 3;
@@ -22,7 +20,6 @@ type GamePickerProps<T extends string> = {
 
 const COLUMNS = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-3" } as const;
 
-/** Shared pre-round selection grid (poster difficulty, Higher/Lower stat, …). */
 export function GamePicker<T extends string>({
   caption,
   options,

@@ -7,8 +7,7 @@ import {
   useGuessGame,
 } from "@/features/games/guess-movie/hooks/useGuessGame";
 import { BackLink } from "@/common/ui/BackLink";
-import { LoadingState } from "@/common/ui/LoadingState";
-import { ErrorState } from "@/common/ui/ErrorState";
+import { AsyncBoundary } from "@/common/ui/AsyncBoundary";
 import { MovieSearch } from "@/features/games/components/MovieSearch";
 import { ResultBanner } from "@/features/games/components/ResultBanner";
 import { GuessGameHeader } from "@/features/games/guess-movie/components/GuessGameHeader";
@@ -20,11 +19,8 @@ import { HintModal } from "@/features/games/guess-movie/components/HintModal";
 import { TutorialModal } from "@/features/games/guess-movie/components/TutorialModal";
 
 type GuessGameScreenProps = {
-  /** Restrict the secret film and all guesses to this TMDB genre id. */
   genre?: number;
-  /** Display name for the active genre, e.g. "Action". */
   genreName?: string;
-  /** Where the back link points (defaults to the games list). */
   backHref?: string;
 };
 
@@ -38,20 +34,22 @@ export const GuessGameScreen = ({
   const [hintOpen, setHintOpen] = useState(false);
 
   return (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-10">
+    <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-8 sm:py-10">
       <BackLink href={backHref} label={genreName ? "Genres" : "Games"} />
       <GuessGameHeader genreName={genreName} />
 
-      {game.status === "loading" && <LoadingState message="Drawing a secret film…" />}
-      {game.status === "error" && (
-        <ErrorState message={game.error ?? "Could not start game"} onRetry={game.start} />
-      )}
+      <AsyncBoundary
+        loading={game.status === "loading"}
+        error={game.status === "error" ? (game.error ?? "Could not start game") : null}
+        onRetry={game.start}
+        loadingMessage="Drawing a secret film…"
+      />
 
       {(game.status === "playing" || game.ended) && (
         <>
           {!game.ended && (
             <div className="mt-7 flex flex-col gap-3">
-              <DebugAnswer title={game.debugTitle} />
+              {/* <DebugAnswer title={game.debugTitle} /> */}
               <MovieSearch
                 onSelect={game.submitGuess}
                 disabled={game.submitting}

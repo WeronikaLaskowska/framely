@@ -10,7 +10,6 @@ type ButtonLinkProps = LinkProps & {
   "aria-label"?: string;
 };
 
-/** A next/link rendered with the pixel-art button skin. */
 export const ButtonLink = ({
   variant = "ghost",
   className,

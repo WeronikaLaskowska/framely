@@ -19,7 +19,6 @@ type GuessPersonAvatarProps = {
   matched: boolean;
 };
 
-/** A cast member / director headshot, highlighted green when it's a match. */
 export const GuessPersonAvatar = ({ person, role, matched }: GuessPersonAvatarProps) => {
   const photo = tmdbImage(person?.profilePath ?? null, "w185");
   return (
@@ -29,7 +28,7 @@ export const GuessPersonAvatar = ({ person, role, matched }: GuessPersonAvatarPr
         className={cn(
           "relative h-14 w-14 overflow-hidden border-2",
           matched
-            ? "border-fr-correct shadow-[0_0_18px_-4px_var(--fr-correct)]"
+            ? "border-fr-correct shadow-[0_0_18px_-4px_var(--color-fr-correct)]"
             : "border-fr-border-strong",
         )}
       >

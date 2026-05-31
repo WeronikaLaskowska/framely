@@ -4,9 +4,8 @@ import { ScrollReveal } from "@/common/decoration/ScrollReveal";
 import { SectionTitle } from "@/common/typography/SectionTitle";
 import { EmberText } from "@/common/typography/EmberText";
 
-/** The games shown as a contact sheet of film cells. */
 export const GamesPreview = () => (
-  <section className="relative mx-auto w-full max-w-6xl px-5 py-24 xl:px-10">
+  <section className="relative mx-auto w-full max-w-6xl px-5 py-16 sm:py-24 xl:px-10">
     <div className="fr-grid-backdrop pointer-events-none absolute inset-0" aria-hidden />
 
     <ScrollReveal className="relative mb-10 flex flex-wrap items-end justify-between gap-4">

@@ -36,7 +36,7 @@ export const MovieSearch = ({
   const listId = useId();
 
   const debounced = useDebouncedValue(query, 160);
-  const { data: results = [], isFetching } = useMovieSearchQuery(debounced, genre);
+  const { data: results = [], isFetching, isError } = useMovieSearchQuery(debounced, genre);
 
   const choose = (movie: MovieLite) => {
     if (excludeIds.includes(movie.id)) return;
@@ -89,11 +89,12 @@ export const MovieSearch = ({
         />
       </div>
 
-      {open && (results.length > 0 || isFetching) && (
+      {open && (results.length > 0 || isFetching || isError) && (
         <MovieSearchCard
           id={listId}
           results={results}
           isFetching={isFetching}
+          isError={isError}
           activeIndex={active}
           excludeIds={excludeIds}
           onHover={setActive}

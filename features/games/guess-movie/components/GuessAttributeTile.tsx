@@ -16,7 +16,6 @@ type GuessAttributeTileProps = {
   children: ReactNode;
 };
 
-/** One attribute cell in a guess dossier, coloured by its verdict. */
 export const GuessAttributeTile = ({
   label,
   result,

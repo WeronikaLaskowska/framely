@@ -9,7 +9,6 @@ type MovieGenreProps = {
   matched: boolean;
 };
 
-/** A single genre chip, colour-coded by whether it matches the target film. */
 export const MovieGenre = ({ name, matched }: MovieGenreProps) => (
   <span
     className={cn(

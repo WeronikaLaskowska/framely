@@ -2,7 +2,6 @@
 import type { CastLite, MovieFacts } from "@/models/movie";
 import { type RawDetails, tmdbFetch, yearOf } from "@/lib/server/tmdbClient";
 
-/** Genres, revenue, rating, studio, top-billed cast and director for a movie. */
 export const getMovieFacts = async (id: number): Promise<MovieFacts> => {
   const d = await tmdbFetch<RawDetails>(`/movie/${id}`, {
     append_to_response: "credits",

@@ -28,7 +28,10 @@ export const ScrollReveal = ({ children, className, delay = 0 }: ScrollRevealPro
           observer.disconnect();
         }
       },
-      { threshold: 0.15 },
+      // Fire as soon as the element edges into view (independent of its height,
+      // so tall sections like the lineup grid / CTA card glide in instead of
+      // popping once 15% of a large box happens to be on-screen).
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();

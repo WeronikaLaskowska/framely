@@ -14,7 +14,6 @@ type ResultBannerProps = {
   onPlayAgain: () => void;
 };
 
-/** Shown when a round ends — reveals the secret film with its poster + facts. */
 export const ResultBanner = ({ won, target, detail, onPlayAgain }: ResultBannerProps) => {
   const poster = tmdbImage(target.posterPath, "w342");
   return (

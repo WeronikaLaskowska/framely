@@ -5,9 +5,8 @@ import { ButtonLink } from "@/common/ui/ButtonLink";
 import { DisplayHeading } from "@/common/typography/DisplayHeading";
 import { EmberText } from "@/common/typography/EmberText";
 
-/** Closing "feature presentation" slate. */
 export const Cta = () => (
-  <section className="mx-auto w-full max-w-6xl px-5 pb-28 pt-8 xl:px-10">
+  <section className="mx-auto w-full max-w-6xl px-5 pb-20 pt-8 sm:pb-28 xl:px-10">
     <ScrollReveal>
       <Card className="relative overflow-hidden px-6 py-16 text-center md:px-10 md:py-24">
         <CornerFrame />

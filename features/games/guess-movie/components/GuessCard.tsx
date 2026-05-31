@@ -8,7 +8,6 @@ import { GuessAttributeTile } from "@/features/games/guess-movie/components/Gues
 import { GuessPersonAvatar } from "@/features/games/guess-movie/components/GuessPersonAvatar";
 import { MovieGenre } from "@/features/games/guess-movie/components/MovieGenre";
 
-/** One guessed film, rendered as a Spotle-style dossier in the pixel theme. */
 export const GuessCard = ({ result }: { result: GuessResult }) => {
   const movie = result.guess;
   const attr = result.attributes;

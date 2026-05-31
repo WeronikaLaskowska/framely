@@ -13,10 +13,15 @@ export const SiteFooter = () => (
           height={500}
           className="h-28 w-28 object-contain"
         />
-        <Timecode className="max-w-md leading-relaxed normal-case tracking-normal text-fr-fg-subtle">
-          This product uses the TMDB API but is not endorsed or certified by
-          TheMovieDB.
-        </Timecode>
+        <div className="flex max-w-md flex-col gap-2">
+          <Timecode className="leading-relaxed normal-case tracking-normal text-fr-fg-subtle">
+            This product uses the TMDB API but is not endorsed or certified by
+            TheMovieDB.
+          </Timecode>
+          <Timecode className="leading-relaxed normal-case tracking-normal text-fr-fg-subtle">
+            A non-commercial portfolio project, built for fun.
+          </Timecode>
+        </div>
       </div>
     </div>
   </footer>

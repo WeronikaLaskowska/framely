@@ -3,8 +3,7 @@
 import { usePosterGame } from "@/features/games/poster/hooks/usePosterGame";
 import { BackLink } from "@/common/ui/BackLink";
 import { Button } from "@/common/ui/Button";
-import { LoadingState } from "@/common/ui/LoadingState";
-import { ErrorState } from "@/common/ui/ErrorState";
+import { AsyncBoundary } from "@/common/ui/AsyncBoundary";
 import { Counter } from "@/common/typography/Counter";
 import { MovieSearch } from "@/features/games/components/MovieSearch";
 import { ResultBanner } from "@/features/games/components/ResultBanner";
@@ -17,7 +16,7 @@ export const PosterGameScreen = () => {
   const { cfg } = game;
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-10">
+    <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-8 sm:py-10">
       <div className="flex items-center justify-between">
         <BackLink href="/games" label="Games" />
         {game.status === "playing" && (
@@ -30,14 +29,13 @@ export const PosterGameScreen = () => {
       <PosterGameHeader />
 
       {game.status === "select" && <PosterDifficultyPicker onSelect={game.start} />}
-      {game.status === "loading" && <LoadingState message="Loading a poster…" />}
-      {game.status === "error" && (
-        <ErrorState
-          message={game.error ?? "Could not start game"}
-          onRetry={game.backToSelect}
-          retryLabel="Back"
-        />
-      )}
+      <AsyncBoundary
+        loading={game.status === "loading"}
+        error={game.status === "error" ? (game.error ?? "Could not start game") : null}
+        onRetry={game.backToSelect}
+        retryLabel="Back"
+        loadingMessage="Loading a poster…"
+      />
 
       {(game.status === "playing" || game.ended) && cfg && game.posterUrl && (
         <div className="mt-8 flex flex-col items-center gap-6">

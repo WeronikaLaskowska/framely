@@ -7,7 +7,6 @@ type ErrorStateProps = {
   retryLabel?: string;
 };
 
-/** Error card with a retry action, shown when a round fails to load. */
 export const ErrorState = ({
   message,
   onRetry,

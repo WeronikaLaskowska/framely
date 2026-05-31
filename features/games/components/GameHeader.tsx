@@ -3,14 +3,11 @@ import { Badge } from "@/common/ui/Badge";
 import { DisplayHeading } from "@/common/typography/DisplayHeading";
 
 type GameHeaderProps = {
-  /** Optional pixel badge above the title. */
   badge?: ReactNode;
   title: ReactNode;
-  /** Optional supporting line under the title. */
   blurb?: ReactNode;
 };
 
-/** Shared title block for every game screen — badge + display heading + blurb. */
 export const GameHeader = ({ badge, title, blurb }: GameHeaderProps) => (
   <header className="mt-6">
     {badge && <Badge>{badge}</Badge>}

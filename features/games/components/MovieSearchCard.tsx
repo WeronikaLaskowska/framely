@@ -7,17 +7,18 @@ type MovieSearchCardProps = {
   id: string;
   results: MovieLite[];
   isFetching: boolean;
+  isError: boolean;
   activeIndex: number;
   excludeIds: number[];
   onHover: (index: number) => void;
   onSelect: (movie: MovieLite) => void;
 };
 
-/** The floating autocomplete dropdown for MovieSearch — results + loading row. */
 export const MovieSearchCard = ({
   id,
   results,
   isFetching,
+  isError,
   activeIndex,
   excludeIds,
   onHover,
@@ -32,6 +33,11 @@ export const MovieSearchCard = ({
     {results.length === 0 && isFetching && (
       <li className="flex items-center gap-2 px-3 py-3 text-sm text-fr-fg-subtle">
         <Loader2 size={15} className="animate-spin" /> Searching…
+      </li>
+    )}
+    {results.length === 0 && !isFetching && isError && (
+      <li className="px-3 py-3 text-sm text-fr-close">
+        Couldn&apos;t load suggestions. Keep typing to retry.
       </li>
     )}
     {results.map((movie, i) => (

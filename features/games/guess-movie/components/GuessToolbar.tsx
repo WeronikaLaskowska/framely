@@ -14,7 +14,6 @@ type GuessToolbarProps = {
   onGiveUp: () => void;
 };
 
-/** The guess counter and tutorial / hint / give-up actions row. */
 export const GuessToolbar = ({
   currentGuess,
   maxGuesses,

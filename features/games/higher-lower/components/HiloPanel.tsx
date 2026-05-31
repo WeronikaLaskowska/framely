@@ -21,7 +21,6 @@ const outcomeBorder = (outcome?: boolean | null) =>
 const outcomeText = (outcome?: boolean | null) =>
   outcome === true ? "text-fr-correct" : outcome === false ? "text-fr-close" : "text-fr-fg";
 
-/** One film card in the Higher or Lower comparison. */
 export const HiloPanel = ({ card, caption, valueText, outcome, children }: HiloPanelProps) => {
   return (
     <Card className={`flex flex-col overflow-hidden border-2 p-0 transition-colors ${outcomeBorder(outcome)}`}>
@@ -33,7 +32,7 @@ export const HiloPanel = ({ card, caption, valueText, outcome, children }: HiloP
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-3 sm:p-4">
         <DisplayHeading as="h3" className="text-base leading-tight md:text-lg">
           {card.title}
         </DisplayHeading>

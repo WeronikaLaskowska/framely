@@ -7,9 +7,7 @@ type PosterProps = {
   alt: string;
   /** TMDB image size bucket (e.g. "w92", "w185", "w342"). */
   size?: string;
-  /** Size of the Film icon shown when there's no artwork. */
   iconSize?: number;
-  /** Extra classes for the <img>. */
   className?: string;
 };
 

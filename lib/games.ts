@@ -49,7 +49,7 @@ export const GAMES: GameMeta[] = [
     title: "Higher or Lower",
     tagline: "Beat the stat",
     description:
-      "Two films, one question: did the next one gross more — or score higher — than the last? Tap higher or lower, keep the chain alive and chase your longest streak.",
+      "Two films, one question: did the next one gross more - or score higher — than the last? Tap higher or lower, keep the chain alive and chase your longest streak.",
     accent: "cool",
   },
 ];

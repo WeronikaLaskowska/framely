@@ -4,7 +4,7 @@ import { ButtonLink } from "@/common/ui/ButtonLink";
 
 export const SiteHeader = () => (
   <header className="sticky top-0 z-30 border-b-2 border-fr-border-strong bg-fr-bg/70 backdrop-blur-xl">
-    <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-5 xl:px-10">
+    <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:h-20 xl:px-10">
       <Link href="/" className="group flex items-center" aria-label="Framely — home">
         <Image
           src="/logo.png"
@@ -12,7 +12,7 @@ export const SiteHeader = () => (
           width={500}
           height={500}
           priority
-          className="h-16 w-16 object-contain transition-transform duration-200 group-hover:-translate-y-0.5"
+          className="h-12 w-12 object-contain transition-transform duration-200 group-hover:-translate-y-0.5 sm:h-16 sm:w-16"
         />
       </Link>
 

@@ -22,7 +22,6 @@ type HintModalProps = {
   onReveal: (type: HintType) => void;
 };
 
-/** Modal listing the three buyable hints; each clue can be revealed once. */
 export const HintModal = ({ open, onClose, revealed, loadingType, onReveal }: HintModalProps) => (
   <Modal
     open={open}

@@ -10,7 +10,6 @@ type HiloResultProps = {
   onChangeStat: () => void;
 };
 
-/** End-of-run slate showing the final streak and replay actions. */
 export const HiloResult = ({ score, best, onPlayAgain, onChangeStat }: HiloResultProps) => (
   <Card className="fr-pop mt-10 p-8 text-center">
     <Timecode className="text-fr-close">Streak ended</Timecode>

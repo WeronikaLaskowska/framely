@@ -1,9 +1,7 @@
 import { useState, type KeyboardEvent } from "react";
 
 type ListboxNavigation = {
-  /** Index of the currently highlighted item. */
   active: number;
-  /** Manually move the highlight (e.g. on hover or when results change). */
   setActive: (index: number) => void;
   /** Wire onto the input/list element to drive ↑/↓ + Enter + Escape. */
   onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
@@ -11,7 +9,6 @@ type ListboxNavigation = {
 
 type Options<T> = {
   items: T[];
-  /** Navigation is a no-op while the list is closed. */
   isOpen: boolean;
   onChoose: (item: T) => void;
   onClose: () => void;

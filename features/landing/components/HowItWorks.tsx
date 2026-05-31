@@ -4,9 +4,8 @@ import { ScrollReveal } from "@/common/decoration/ScrollReveal";
 import { SectionTitle } from "@/common/typography/SectionTitle";
 import { EmberText } from "@/common/typography/EmberText";
 
-/** Editorial "spec sheet" — large indexed rows separated by hairlines. */
 export const HowItWorks = () => (
-  <section className="mx-auto w-full max-w-6xl px-5 py-24 xl:px-10">
+  <section className="mx-auto w-full max-w-6xl px-5 py-16 sm:py-24 xl:px-10">
     <ScrollReveal className="mb-12 flex flex-wrap items-end justify-between gap-4">
       <SectionTitle className="max-w-xl">
         How the <EmberText>game</EmberText> plays
