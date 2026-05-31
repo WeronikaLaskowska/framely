@@ -3,7 +3,7 @@
 import { useReviewGame } from "@/features/games/review/hooks/useReviewGame";
 import { BackLink } from "@/common/ui/BackLink";
 import { Counter } from "@/common/typography/Counter";
-import { AsyncBoundary } from "@/common/ui/AsyncBoundary";
+import { QueryWrapper } from "@/common/ui/QueryWrapper";
 import { MovieSearch } from "@/features/games/components/MovieSearch";
 import { ResultBanner } from "@/features/games/components/ResultBanner";
 import { ReviewGameHeader } from "@/features/games/review/components/ReviewGameHeader";
@@ -25,14 +25,12 @@ export const ReviewGameScreen = () => {
 
       <ReviewGameHeader />
 
-      <AsyncBoundary
-        loading={game.status === "loading"}
+      <QueryWrapper
+        isLoading={game.status === "loading"}
         error={game.status === "error" ? (game.error ?? "Could not start game") : null}
         onRetry={game.start}
         loadingMessage="Pulling up the reviews…"
-      />
-
-      {(game.status === "playing" || game.ended) && (
+      >
         <div className="mt-8 flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             {game.revealedClues.map((clue, i) => (
@@ -77,7 +75,7 @@ export const ReviewGameScreen = () => {
             )
           )}
         </div>
-      )}
+      </QueryWrapper>
     </main>
   );
 };

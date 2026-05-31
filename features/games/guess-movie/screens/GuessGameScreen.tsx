@@ -7,7 +7,7 @@ import {
   useGuessGame,
 } from "@/features/games/guess-movie/hooks/useGuessGame";
 import { BackLink } from "@/common/ui/BackLink";
-import { AsyncBoundary } from "@/common/ui/AsyncBoundary";
+import { QueryWrapper } from "@/common/ui/QueryWrapper";
 import { MovieSearch } from "@/features/games/components/MovieSearch";
 import { ResultBanner } from "@/features/games/components/ResultBanner";
 import { GuessGameHeader } from "@/features/games/guess-movie/components/GuessGameHeader";
@@ -38,14 +38,12 @@ export const GuessGameScreen = ({
       <BackLink href={backHref} label={genreName ? "Genres" : "Games"} />
       <GuessGameHeader genreName={genreName} />
 
-      <AsyncBoundary
-        loading={game.status === "loading"}
+      <QueryWrapper
+        isLoading={game.status === "loading"}
         error={game.status === "error" ? (game.error ?? "Could not start game") : null}
         onRetry={game.start}
         loadingMessage="Drawing a secret film…"
-      />
-
-      {(game.status === "playing" || game.ended) && (
+      >
         <>
           {!game.ended && (
             <div className="mt-7 flex flex-col gap-3">
@@ -103,7 +101,7 @@ export const GuessGameScreen = ({
             </p>
           )}
         </>
-      )}
+      </QueryWrapper>
 
       <TutorialModal open={tutorialOpen} onClose={() => setTutorialOpen(false)} />
       <HintModal

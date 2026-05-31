@@ -3,7 +3,7 @@
 import { Trophy } from "lucide-react";
 import { useHiloGame } from "@/features/games/higher-lower/hooks/useHiloGame";
 import { BackLink } from "@/common/ui/BackLink";
-import { AsyncBoundary } from "@/common/ui/AsyncBoundary";
+import { QueryWrapper } from "@/common/ui/QueryWrapper";
 import { Counter } from "@/common/typography/Counter";
 import { HiloHeader } from "@/features/games/higher-lower/components/HiloHeader";
 import { HiloMetricPicker } from "@/features/games/higher-lower/components/HiloMetricPicker";
@@ -29,33 +29,36 @@ export const HiloGameScreen = () => {
 
       <HiloHeader />
 
-      {game.status === "select" && <HiloMetricPicker onSelect={game.start} />}
-      <AsyncBoundary
-        loading={game.status === "loading"}
-        error={game.status === "error" ? "Could not load deck" : null}
-        onRetry={game.backToSelect}
-        retryLabel="Back"
-        loadingMessage="Shuffling the deck…"
-      />
+      {game.status === "select" ? (
+        <HiloMetricPicker onSelect={game.start} />
+      ) : (
+        <QueryWrapper
+          isLoading={game.status === "loading"}
+          error={game.status === "error" ? "Could not load deck" : null}
+          onRetry={game.backToSelect}
+          retryLabel="Back"
+          loadingMessage="Shuffling the deck…"
+        >
+          {game.status === "playing" && game.cfg && game.current && game.next && (
+            <HiloBoard
+              cfg={game.cfg}
+              current={game.current}
+              next={game.next}
+              revealed={game.revealed}
+              lastCorrect={game.lastCorrect}
+              onGuess={game.guess}
+            />
+          )}
 
-      {game.status === "playing" && game.cfg && game.current && game.next && (
-        <HiloBoard
-          cfg={game.cfg}
-          current={game.current}
-          next={game.next}
-          revealed={game.revealed}
-          lastCorrect={game.lastCorrect}
-          onGuess={game.guess}
-        />
-      )}
-
-      {game.status === "over" && (
-        <HiloResult
-          score={game.score}
-          best={game.best}
-          onPlayAgain={game.replay}
-          onChangeStat={game.backToSelect}
-        />
+          {game.status === "over" && (
+            <HiloResult
+              score={game.score}
+              best={game.best}
+              onPlayAgain={game.replay}
+              onChangeStat={game.backToSelect}
+            />
+          )}
+        </QueryWrapper>
       )}
     </main>
   );
