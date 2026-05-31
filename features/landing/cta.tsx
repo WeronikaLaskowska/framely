@@ -1,0 +1,32 @@
+import Link from "next/link";
+import { ScrollReveal } from "@/components/scroll-reveal";
+import { CornerFrame } from "@/components/corner-frame";
+
+/** Closing "feature presentation" slate. */
+export function Cta() {
+  return (
+    <section className="mx-auto w-full max-w-6xl px-5 pb-28 pt-8 xl:px-10">
+      <ScrollReveal>
+        <div className="fr-card relative overflow-hidden px-6 py-16 text-center md:px-10 md:py-24">
+          <CornerFrame />
+
+          <span className="fr-timecode relative text-fr-flame/80">Feature presentation</span>
+          <h2 className="fr-display relative mx-auto mt-5 max-w-3xl text-[clamp(1.5rem,4.5vw,3rem)] leading-[1.35]">
+            Lights down.
+            <br />
+            <span className="fr-ember-text">Roll the film.</span>
+          </h2>
+          <p className="relative mx-auto mt-5 max-w-md text-fr-fg-muted">
+            One secret movie. Six clues. How few guesses do you need to call it?
+          </p>
+          <Link
+            href="/games"
+            className="fr-btn fr-btn--ember relative mt-9 px-8 py-4 text-base"
+          >
+            Choose a game
+          </Link>
+        </div>
+      </ScrollReveal>
+    </section>
+  );
+}
