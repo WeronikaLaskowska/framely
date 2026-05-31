@@ -16,7 +16,7 @@ export function GamesPreview() {
 
       <div className="relative grid gap-5 md:grid-cols-2">
         {GAMES.map((game, i) => (
-          <ScrollReveal key={game.slug} delay={i * 120} className="h-full">
+          <ScrollReveal key={game.slug} delay={160 + i * 110} className="h-full">
             <GameCell game={game} />
           </ScrollReveal>
         ))}

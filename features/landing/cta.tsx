@@ -10,19 +10,22 @@ export function Cta() {
         <div className="fr-card relative overflow-hidden px-6 py-16 text-center md:px-10 md:py-24">
           <CornerFrame />
 
-        
-          <h2 className="fr-display relative mx-auto mt-5 max-w-3xl text-[clamp(1.5rem,4.5vw,3rem)] leading-[1.35]">
-            Lights down.
-            <br />
-            <span className="fr-ember-text">Roll the film.</span>
-          </h2>
-        
-          <Link
-            href="/games"
-            className="fr-btn fr-btn--ember relative mt-9 px-8 py-4 text-base"
-          >
-            Choose a game
-          </Link>
+          <ScrollReveal delay={140} className="relative mx-auto mt-5 max-w-3xl">
+            <h2 className="fr-display text-[clamp(1.5rem,4.5vw,3rem)] leading-[1.35]">
+              Lights down.
+              <br />
+              <span className="fr-ember-text">Roll the film.</span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal delay={300} className="mt-9">
+            <Link
+              href="/games"
+              className="fr-btn fr-btn--ember relative px-8 py-4 text-base"
+            >
+              Choose a game
+            </Link>
+          </ScrollReveal>
         </div>
       </ScrollReveal>
     </section>
