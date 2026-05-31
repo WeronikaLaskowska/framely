@@ -13,12 +13,12 @@ export function SiteFooter() {
             height={500}
             className="h-28 w-28 object-contain"
           />
-          <span className="fr-timecode">End of reel · 24 fps · ISO 1980+</span>
-        </div>
-        <p className="fr-timecode max-w-md leading-relaxed normal-case tracking-normal text-fr-fg-subtle">
+             <p className="fr-timecode max-w-md leading-relaxed normal-case tracking-normal text-fr-fg-subtle">
           This product uses the TMDB API but is not endorsed or certified by
           TheMovieDB.
         </p>
+        </div>
+    
       </div>
     </footer>
   );

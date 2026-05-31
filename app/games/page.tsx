@@ -19,12 +19,10 @@ export default function GamesPage() {
 
       <div className="fr-rise mt-10 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="fr-tape">Select a reel</span>
           <h1 className="fr-section-title mt-5">
             Choose a <span className="fr-ember-text">game</span>
           </h1>
         </div>
-        <span className="fr-timecode">Contact sheet · 2 modes</span>
       </div>
 
       <div className="mt-12 grid gap-5 md:grid-cols-2">

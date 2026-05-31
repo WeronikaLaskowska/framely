@@ -3,19 +3,16 @@ import { ScrollReveal } from "@/components/scroll-reveal";
 const STEPS = [
   {
     no: "01",
-    tag: "FADE IN",
     title: "A secret film is cast",
     body: "Every round draws a well-known movie from 1980 onward. You never see its title — only the clues you earn.",
   },
   {
     no: "02",
-    tag: "DEVELOP",
     title: "Guess, then read the colour",
     body: "Green is an exact match. Amber is close — overlapping genres or cast, a near year, rating or gross. Grey is cold. Arrows point you higher or lower.",
   },
   {
     no: "03",
-    tag: "CUT",
     title: "Call it in as few takes as you can",
     body: "Narrow it across six attributes — or one revealed poster fragment — and name the title before the reel runs out.",
   },
@@ -29,7 +26,6 @@ export function HowItWorks() {
         <h2 className="fr-section-title max-w-xl">
           How the <span className="fr-ember-text">game</span> plays
         </h2>
-        <span className="fr-timecode">Spec · 003 lines</span>
       </ScrollReveal>
 
       <div className="border-t border-fr-border">
@@ -41,9 +37,7 @@ export function HowItWorks() {
                   {step.no}
                 </span>
               </div>
-              <div className="md:col-span-2">
-                <span className="fr-timecode text-fr-flame/80">{step.tag}</span>
-              </div>
+           
               <div className="md:col-span-7">
                 <h3 className="fr-display text-sm leading-relaxed md:text-base">{step.title}</h3>
                 <p className="mt-3 max-w-xl text-fr-fg-muted">{step.body}</p>

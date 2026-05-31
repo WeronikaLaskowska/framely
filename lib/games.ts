@@ -1,4 +1,4 @@
-/** Static metadata for the two games — shared by the landing preview and the
+/** Static metadata for the games — shared by the landing preview and the
  *  /games selection screen so the copy stays in one place. */
 
 export type GameMeta = {
@@ -30,6 +30,26 @@ export const GAMES: GameMeta[] = [
     tagline: "Read the artwork",
     description:
       "A poster hidden behind frosted tiles. Each wrong guess clears another fragment. Pick easy, medium or hard and race to name it before it's fully revealed.",
+    accent: "cool",
+  },
+  {
+    slug: "spotle-genre",
+    href: "/games/spotle-genre",
+    index: "003",
+    title: "By Genre",
+    tagline: "Spotle, one genre",
+    description:
+      "The same six-clue hunt, but you pick the genre first. The secret film — and every guess — stays locked to it, so it's all action, horror, sci-fi or whatever you choose.",
+    accent: "ember",
+  },
+  {
+    slug: "higher-lower",
+    href: "/games/higher-lower",
+    index: "004",
+    title: "Higher or Lower",
+    tagline: "Beat the stat",
+    description:
+      "Two films, one question: did the next one gross more — or score higher — than the last? Tap higher or lower, keep the chain alive and chase your longest streak.",
     accent: "cool",
   },
 ];

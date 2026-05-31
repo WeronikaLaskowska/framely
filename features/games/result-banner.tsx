@@ -23,7 +23,7 @@ export function ResultBanner({ won, target, detail, onPlayAgain }: ResultBannerP
           <img
             src={poster}
             alt={target.title}
-            className="mx-auto w-40 shrink-0 rounded-xl border border-fr-border-strong shadow-2xl md:mx-0"
+            className="mx-auto aspect-2/3 w-40 shrink-0 self-start rounded-xl border border-fr-border-strong object-cover shadow-2xl md:mx-0"
           />
         )}
         <div className="flex flex-col">

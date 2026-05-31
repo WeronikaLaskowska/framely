@@ -12,7 +12,6 @@ export function GamesPreview() {
         <h2 className="fr-section-title">
           The <span className="fr-ember-text">lineup</span>
         </h2>
-        <span className="fr-timecode">Contact sheet · 2 modes</span>
       </ScrollReveal>
 
       <div className="relative grid gap-5 md:grid-cols-2">

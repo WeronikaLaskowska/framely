@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import type { GameMeta } from "@/lib/games";
+import { GAMES, type GameMeta } from "@/lib/games";
 import { HoverCard } from "@/components/hover-card";
 import { CornerFrame } from "@/components/corner-frame";
+
+const TOTAL = String(GAMES.length).padStart(3, "0");
 
 /** A game presented as a film-negative "contact-sheet" cell. */
 export function GameCell({ game }: { game: GameMeta }) {
@@ -20,7 +22,7 @@ export function GameCell({ game }: { game: GameMeta }) {
           <div className="flex items-center justify-between">
             <span className="flex items-center gap-2.5">
               <span className={`h-1.5 w-1.5 rounded-full ${accentBg}`} />
-              <span className="fr-counter">{game.index} / 002</span>
+              <span className="fr-counter">{game.index} / {TOTAL}</span>
             </span>
             <span className="inline-flex h-9 w-9 items-center justify-center border-2 border-fr-border-strong text-fr-fg-muted transition-colors group-hover:border-fr-flame group-hover:text-fr-flame">
               <ArrowUpRight size={16} />

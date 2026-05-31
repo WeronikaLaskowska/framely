@@ -8,10 +8,24 @@
  * Server-only: this module reads process.env.TMDB_API_KEY and must never be
  * imported from a client component. It is used exclusively by route handlers.
  */
-import type { CastLite, GenreLite, MovieFacts, MovieLite } from "@/lib/types";
+import type {
+  CastLite,
+  GenreLite,
+  HiloCard,
+  MovieFacts,
+  MovieLite,
+} from "@/lib/types";
 
 const BASE = "https://api.themoviedb.org/3";
 const MIN_DATE = "1980-01-01";
+
+/**
+ * Familiarity floor for the movie pool. `vote_count` is the best proxy for how
+ * widely seen a film is — raising it trims obscure titles. The genre pools are
+ * naturally smaller, so they use a lower floor to keep enough variety.
+ */
+const MIN_VOTE_COUNT = 2500;
+const GENRE_MIN_VOTE_COUNT = 1000;
 
 function apiKey(): string {
   const key = process.env.TMDB_API_KEY;
@@ -49,6 +63,8 @@ type RawMovie = {
   release_date?: string;
   poster_path: string | null;
   backdrop_path?: string | null;
+  popularity?: number;
+  genre_ids?: number[];
 };
 type RawDiscover = { page: number; total_pages: number; results: RawMovie[] };
 type RawGenres = { genres: GenreLite[] };
@@ -90,6 +106,19 @@ export async function getGenreMap(): Promise<Map<number, string>> {
   return new Map(data.genres.map((g) => [g.id, g.name]));
 }
 
+/** Raw discover query for well-known movies (>= 1980), optionally by genre. */
+async function rawDiscover(page: number, genre?: number): Promise<RawDiscover> {
+  const params: Record<string, string | number> = {
+    sort_by: "popularity.desc",
+    "primary_release_date.gte": MIN_DATE,
+    "vote_count.gte": genre ? GENRE_MIN_VOTE_COUNT : MIN_VOTE_COUNT,
+    include_adult: "false",
+    page,
+  };
+  if (genre) params.with_genres = genre;
+  return tmdb<RawDiscover>("/discover/movie", params);
+}
+
 /**
  * Discover a pool of well-known movies (>= 1980), ordered by popularity.
  * `requirePoster` keeps entries that have artwork (needed by the poster game).
@@ -97,34 +126,34 @@ export async function getGenreMap(): Promise<Map<number, string>> {
 export async function discoverPopular(
   page: number,
   requirePoster = false,
+  genre?: number,
 ): Promise<MovieLite[]> {
-  const data = await tmdb<RawDiscover>("/discover/movie", {
-    sort_by: "popularity.desc",
-    "primary_release_date.gte": MIN_DATE,
-    "vote_count.gte": 800,
-    include_adult: "false",
-    page,
-  });
+  const data = await rawDiscover(page, genre);
   let results = data.results;
   if (requirePoster) results = results.filter((m) => m.poster_path);
   return results.map(toLite);
 }
 
-/** How many discover pages we sample from (popularity top ~ 2000 titles). */
-export const DISCOVER_PAGE_RANGE = 100;
+/** How many top-popularity discover pages we sample from (~20 titles/page). */
+export const DISCOVER_PAGE_RANGE = 40;
 
-/** Pick one random popular movie id. */
+/** Pick one random popular movie id, optionally constrained to a genre. */
 export async function randomPopularMovie(
   requirePoster = false,
+  genre?: number,
 ): Promise<MovieLite> {
-  const page = 1 + Math.floor(Math.random() * DISCOVER_PAGE_RANGE);
-  const pool = await discoverPopular(page, requirePoster);
-  if (pool.length === 0) {
-    // Fallback to the very first page if a sampled page came back empty.
-    const fallback = await discoverPopular(1, requirePoster);
-    return fallback[Math.floor(Math.random() * fallback.length)];
-  }
-  return pool[Math.floor(Math.random() * pool.length)];
+  const first = await rawDiscover(1, genre);
+  const totalPages = Math.min(first.total_pages || 1, DISCOVER_PAGE_RANGE);
+  const page = 1 + Math.floor(Math.random() * totalPages);
+  const data = page === 1 ? first : await rawDiscover(page, genre);
+
+  const pick = (movies: RawMovie[]): MovieLite | null => {
+    const pool = requirePoster ? movies.filter((m) => m.poster_path) : movies;
+    if (pool.length === 0) return null;
+    return toLite(pool[Math.floor(Math.random() * pool.length)]);
+  };
+
+  return pick(data.results) ?? pick(first.results) ?? toLite(first.results[0]);
 }
 
 /** Minimum worldwide box office for a movie to be eligible as a secret target. */
@@ -136,10 +165,13 @@ export const MIN_TARGET_REVENUE = 50_000_000;
  * TMDB's discover endpoint can't filter on revenue, so we sample popular
  * candidates and verify their facts, retrying a few times before falling back.
  */
-export async function pickTargetMovieId(maxAttempts = 8): Promise<number> {
+export async function pickTargetMovieId(
+  maxAttempts = 8,
+  genre?: number,
+): Promise<number> {
   let fallback: number | null = null;
   for (let i = 0; i < maxAttempts; i++) {
-    const candidate = await randomPopularMovie(true);
+    const candidate = await randomPopularMovie(true, genre);
     if (!candidate) continue;
     fallback ??= candidate.id;
     const facts = await getMovieFacts(candidate.id);
@@ -147,18 +179,26 @@ export async function pickTargetMovieId(maxAttempts = 8): Promise<number> {
     if (recent && facts.revenue >= MIN_TARGET_REVENUE) return facts.id;
   }
   if (fallback !== null) return fallback;
-  return (await randomPopularMovie(true)).id;
+  return (await randomPopularMovie(true, genre)).id;
 }
 
-/** Search movies by title (>= 1980), for guess autocomplete. */
-export async function searchMovies(query: string): Promise<MovieLite[]> {
+/**
+ * Search movies by title (>= 1980) for guess autocomplete. When `genre` is set
+ * (Spotle by genre), only titles tagged with that genre are returned.
+ */
+export async function searchMovies(query: string, genre?: number): Promise<MovieLite[]> {
   if (!query.trim()) return [];
-  const data = await tmdb<RawDiscover>(
-    "/search/movie",
-    { query, include_adult: "false", page: 1 },
-    0,
-  );
-  return data.results
+  // Short queries return a flood of literal matches that bury famous films, so
+  // we pull the first few pages and re-rank by popularity before trimming.
+  const [p1, p2, p3] = await Promise.all([
+    tmdb<RawDiscover>("/search/movie", { query, include_adult: "false", page: 1 }, 0),
+    tmdb<RawDiscover>("/search/movie", { query, include_adult: "false", page: 2 }, 0),
+    tmdb<RawDiscover>("/search/movie", { query, include_adult: "false", page: 3 }, 0),
+  ]);
+  let all = [...p1.results, ...p2.results, ...p3.results];
+  if (genre) all = all.filter((m) => m.genre_ids?.includes(genre));
+  return all
+    .sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0))
     .map(toLite)
     .filter((m) => m.year !== null && m.year >= 1980)
     .slice(0, 8);
@@ -195,4 +235,62 @@ export async function getMovieFacts(id: number): Promise<MovieFacts> {
     director,
     overview: d.overview ?? "",
   };
+}
+
+/* ---------------------------------------------------------------- *
+ * Higher or Lower deck
+ * ---------------------------------------------------------------- */
+
+/** In-place Fisher–Yates shuffle. */
+function shuffle<T>(arr: T[]): T[] {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/** Light detail fetch with just the two comparable stats (no credits). */
+async function getMovieScore(id: number): Promise<HiloCard> {
+  const d = await tmdb<RawDetails>(`/movie/${id}`);
+  return {
+    id: d.id,
+    title: d.title,
+    year: yearOf(d.release_date),
+    posterPath: d.poster_path,
+    revenue: d.revenue ?? 0,
+    rating: d.vote_average ?? 0,
+  };
+}
+
+/**
+ * Build a shuffled deck of well-known films for Higher or Lower. Each card
+ * carries both stats (box office + rating) so the client can play either mode.
+ * Only films with a poster and a real box office (>= MIN_TARGET_REVENUE) make
+ * the cut, so the comparisons stay between recognisable titles.
+ */
+export async function getHiloDeck(size = 30): Promise<HiloCard[]> {
+  const first = await rawDiscover(1);
+  const totalPages = Math.min(first.total_pages || 1, DISCOVER_PAGE_RANGE);
+
+  const pages = new Set<number>([1]);
+  while (pages.size < Math.min(6, totalPages)) {
+    pages.add(1 + Math.floor(Math.random() * totalPages));
+  }
+  const datas = await Promise.all(
+    [...pages].map((p) => (p === 1 ? Promise.resolve(first) : rawDiscover(p))),
+  );
+
+  const byId = new Map<number, RawMovie>();
+  for (const d of datas) {
+    for (const m of d.results) if (m.poster_path) byId.set(m.id, m);
+  }
+
+  // Over-sample ids since some films report no box office, then trim.
+  const ids = shuffle([...byId.keys()]).slice(0, size * 2);
+  const cards = await Promise.all(ids.map((id) => getMovieScore(id)));
+  const usable = cards.filter(
+    (c) => c.revenue >= MIN_TARGET_REVENUE && c.rating > 0,
+  );
+  return shuffle(usable).slice(0, size);
 }

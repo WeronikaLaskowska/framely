@@ -35,6 +35,19 @@ export type MovieFacts = {
 /** Difficulty tiers for the poster game. */
 export type Difficulty = "easy" | "medium" | "hard";
 
+/** Which stat the Higher or Lower game compares. */
+export type HiloMetric = "box-office" | "rating";
+
+/** A single card in the Higher or Lower deck — carries both comparable stats. */
+export type HiloCard = {
+  id: number;
+  title: string;
+  year: number | null;
+  posterPath: string | null;
+  revenue: number; // USD
+  rating: number; // vote_average 0–10
+};
+
 /** Paid hints the player can unlock in the guess game. */
 export type HintType = "cast" | "decade" | "studio";
 

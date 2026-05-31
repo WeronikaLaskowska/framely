@@ -12,6 +12,8 @@ type MovieSearchProps = {
   /** Movie ids already guessed — shown dimmed and not selectable. */
   excludeIds?: number[];
   placeholder?: string;
+  /** Restrict autocomplete to a single TMDB genre id (Spotle by genre). */
+  genre?: number;
 };
 
 /**
@@ -23,6 +25,7 @@ export function MovieSearch({
   disabled,
   excludeIds = [],
   placeholder = "Guess a movie…",
+  genre,
 }: MovieSearchProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<MovieLite[]>([]);
@@ -43,7 +46,8 @@ export function MovieSearch({
     setOpen(true);
     const ctrl = new AbortController();
     const t = setTimeout(() => {
-      fetch(`/api/movies/search?q=${encodeURIComponent(q)}`, { signal: ctrl.signal })
+      const url = `/api/movies/search?q=${encodeURIComponent(q)}${genre ? `&genre=${genre}` : ""}`;
+      fetch(url, { signal: ctrl.signal })
         .then((r) => r.json())
         .then((data: { results?: MovieLite[] }) => {
           setResults(data.results ?? []);
@@ -57,7 +61,7 @@ export function MovieSearch({
       clearTimeout(t);
       ctrl.abort();
     };
-  }, [query]);
+  }, [query, genre]);
 
   useEffect(() => {
     function onClick(e: MouseEvent) {

@@ -5,15 +5,15 @@ import { DecodeText } from "@/components/decode-text";
 import { Marquee } from "@/components/marquee";
 
 const MARQUEE_ITEMS = [
-  "GENRE",
-  "RELEASE YEAR",
-  "BOX OFFICE",
-  "RATING",
-  "STUDIO",
-  "CAST",
-  "RUNTIME",
-  "ASPECT 2.39:1",
-  "ISO 1980+",
+  "SHREK",
+  "WHITE CHICKS",
+  "THE GODFATHER",
+  "STAR WARS",
+  "THE MATRIX",
+  "TITANIC",
+  "JAWS",
+  "SAW",
+  "THE HEREDITARY",
 ];
 
 export function Hero() {
@@ -50,9 +50,6 @@ export function Hero() {
           </div>
 
           <div className="fr-rise fr-delay-4 mt-2 flex flex-wrap gap-x-6 gap-y-1">
-            <span className="fr-timecode">6 clues</span>
-            <span className="fr-timecode">2 games</span>
-            <span className="fr-timecode">Films 1980 →</span>
             <span className="fr-timecode">Powered by TMDB</span>
           </div>
         </div>

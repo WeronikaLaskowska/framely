@@ -15,7 +15,16 @@ const HINT_UNLOCK_AT = 5;
 
 type Status = "loading" | "playing" | "won" | "lost" | "error";
 
-export function GuessGame() {
+type GuessGameProps = {
+  /** Restrict the secret film and all guesses to this TMDB genre id. */
+  genre?: number;
+  /** Display name for the active genre, e.g. "Action". */
+  genreName?: string;
+  /** Where the back link points (defaults to the games list). */
+  backHref?: string;
+};
+
+export function GuessGame({ genre, genreName, backHref = "/games" }: GuessGameProps) {
   const [token, setToken] = useState<string | null>(null);
   const [guesses, setGuesses] = useState<GuessResult[]>([]);
   const [status, setStatus] = useState<Status>("loading");
@@ -26,6 +35,7 @@ export function GuessGame() {
   const [hintLoading, setHintLoading] = useState<HintType | null>(null);
   const [hintOpen, setHintOpen] = useState(false);
   const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [debugTitle, setDebugTitle] = useState<string | null>(null);
 
   const start = useCallback(async () => {
     setStatus("loading");
@@ -34,17 +44,32 @@ export function GuessGame() {
     setError(null);
     setHints([]);
     setHintOpen(false);
+    setDebugTitle(null);
     try {
-      const res = await fetch("/api/games/guess/start", { method: "POST" });
+      const res = await fetch("/api/games/guess/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(genre ? { genre } : {}),
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Could not start game");
       setToken(data.token);
       setStatus("playing");
+      if (process.env.NODE_ENV !== "production") {
+        fetch("/api/games/guess", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: data.token, reveal: true }),
+        })
+          .then((r) => r.json())
+          .then((d) => d?.target && setDebugTitle(d.target.title as string))
+          .catch(() => {});
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not start game");
       setStatus("error");
     }
-  }, []);
+  }, [genre]);
 
   useEffect(() => {
     start();
@@ -127,23 +152,27 @@ export function GuessGame() {
     <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-10">
       <div className="flex items-center justify-between">
         <Link
-          href="/games"
+          href={backHref}
           className="inline-flex items-center gap-2 text-sm text-fr-fg-muted transition-colors hover:text-fr-fg"
         >
-          <ArrowLeft size={15} /> Games
+          <ArrowLeft size={15} /> {genreName ? "Genres" : "Games"}
         </Link>
-        {status === "playing" && (
-          <span className="fr-counter">
-            {remaining} {remaining === 1 ? "guess" : "guesses"} left
-          </span>
-        )}
+      
       </div>
 
       <header className="mt-6">
+        {genreName && <span className="fr-tape">Genre · {genreName}</span>}
         <h1 className="fr-display mt-4 text-[clamp(2.25rem,6vw,3.75rem)]">
-          Guess the <span className="fr-ember-text">movie</span>
+          {genreName ? (
+            <>
+              Guess the <span className="fr-ember-text">{genreName.toLowerCase()}</span> film
+            </>
+          ) : (
+            <>
+              Guess the <span className="fr-ember-text">movie</span>
+            </>
+          )}
         </h1>
-     
       </header>
 
       {status === "loading" && (
@@ -165,10 +194,18 @@ export function GuessGame() {
         <>
           {!ended && (
             <div className="mt-7 flex flex-col gap-3">
+              {process.env.NODE_ENV !== "production" && debugTitle && (
+                <div className="border-2 border-dashed border-fr-close/50 bg-fr-close/10 px-3 py-2 font-mono text-xs text-fr-close">
+                  DEBUG · answer: {debugTitle}
+                </div>
+              )}
+
               <MovieSearch
                 onSelect={submitGuess}
                 disabled={submitting}
                 excludeIds={guesses.map((g) => g.guess.id)}
+                genre={genre}
+                placeholder={genreName ? `Guess a ${genreName.toLowerCase()} film…` : "Guess a movie…"}
               />
 
               <div className="flex flex-wrap items-center justify-between gap-3">
