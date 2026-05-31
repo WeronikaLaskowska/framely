@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import type { Difficulty } from "@/models/poster";
 import type { MovieFacts, MovieLite } from "@/models/movie";
 import { tmdbImage } from "@/lib/format";
+import { awardWin } from "@/features/score/award";
 import { DIFFICULTY, shuffledIndices } from "@/features/games/poster/data/difficulty";
 import {
   useRevealPosterMutation,
@@ -25,6 +26,7 @@ export const usePosterGame = () => {
   const [guessedIds, setGuessedIds] = useState<number[]>([]);
   const [target, setTarget] = useState<MovieFacts | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [awardedPoints, setAwardedPoints] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const { mutateAsync: startReq } = useStartPosterGameMutation();
@@ -54,6 +56,7 @@ export const usePosterGame = () => {
       setWrong(0);
       setGuessedIds([]);
       setTarget(null);
+      setAwardedPoints(null);
       try {
         const { token: fresh, posterPath } = await startReq();
         const url = tmdbImage(posterPath, "w500");
@@ -83,6 +86,7 @@ export const usePosterGame = () => {
         if (correct) {
           setTarget(solved);
           setStatus("won");
+          setAwardedPoints(awardWin(cfg.attempts - wrong, cfg.attempts));
         } else {
           const nextWrong = wrong + 1;
           setWrong(nextWrong);
@@ -120,6 +124,7 @@ export const usePosterGame = () => {
     guessedIds,
     target,
     error,
+    awardedPoints,
     submitting,
     cfg,
     ended: status === "won" || status === "lost",

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Space_Grotesk, Press_Start_2P } from "next/font/goog
 import "./globals.css";
 import { Atmosphere } from "@/common/decoration/Atmosphere";
 import { FilmRails } from "@/common/decoration/FilmRails";
+import { SiteHeader } from "@/common/layout/SiteHeader";
 import { QueryProvider } from "@/providers/query-provider";
 
 const geistSans = Geist({
@@ -55,6 +56,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
       <QueryProvider>
         <Atmosphere />
         <FilmRails />
+        <SiteHeader />
         <div className="relative z-10 flex min-h-dvh flex-col">{children}</div>
       </QueryProvider>
     </body>

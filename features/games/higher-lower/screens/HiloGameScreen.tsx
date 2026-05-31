@@ -54,6 +54,7 @@ export const HiloGameScreen = () => {
             <HiloResult
               score={game.score}
               best={game.best}
+              points={game.awardedPoints}
               onPlayAgain={game.replay}
               onChangeStat={game.backToSelect}
             />

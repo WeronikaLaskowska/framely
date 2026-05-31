@@ -47,7 +47,7 @@ export const GuessGameScreen = ({
         <>
           {!game.ended && (
             <div className="mt-7 flex flex-col gap-3">
-              {/* <DebugAnswer title={game.debugTitle} /> */}
+              <DebugAnswer title={game.debugTitle} />
               <MovieSearch
                 onSelect={game.submitGuess}
                 disabled={game.submitting}
@@ -86,6 +86,7 @@ export const GuessGameScreen = ({
                     ? `Solved in ${game.guesses.length} ${game.guesses.length === 1 ? "guess" : "guesses"}`
                     : undefined
                 }
+                points={game.awardedPoints}
                 onPlayAgain={game.start}
               />
             </div>

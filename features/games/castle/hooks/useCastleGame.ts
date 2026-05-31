@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { CastLite, MovieFacts, MovieLite } from "@/models/movie";
+import { awardWin } from "@/features/score/award";
 import {
   useRevealCastleMutation,
   useStartCastleGameMutation,
@@ -21,6 +22,7 @@ export const useCastleGame = () => {
   const [guessedIds, setGuessedIds] = useState<number[]>([]);
   const [target, setTarget] = useState<MovieFacts | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [awardedPoints, setAwardedPoints] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const { mutateAsync: startReq } = useStartCastleGameMutation();
@@ -47,6 +49,7 @@ export const useCastleGame = () => {
     setGuessedIds([]);
     setTarget(null);
     setCast([]);
+    setAwardedPoints(null);
     try {
       const { token: fresh, cast: freshCast } = await startReq();
       setToken(fresh);
@@ -80,6 +83,7 @@ export const useCastleGame = () => {
         if (correct) {
           setTarget(solved);
           setStatus("won");
+          setAwardedPoints(awardWin(maxGuesses - wrong, maxGuesses));
         } else {
           const nextWrong = wrong + 1;
           setWrong(nextWrong);
@@ -106,6 +110,7 @@ export const useCastleGame = () => {
     cast,
     target,
     error,
+    awardedPoints,
     submitting,
     guessedIds,
     wrong,

@@ -70,6 +70,7 @@ export const ReviewGameScreen = () => {
                     ? `Solved with ${game.wrong} ${game.wrong === 1 ? "miss" : "misses"}`
                     : undefined
                 }
+                points={game.awardedPoints}
                 onPlayAgain={game.start}
               />
             )

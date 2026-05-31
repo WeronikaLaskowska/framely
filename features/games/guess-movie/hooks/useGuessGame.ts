@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { GuessResult } from "@/models/guess";
 import type { Hint, HintType } from "@/models/hint";
 import type { MovieFacts, MovieLite } from "@/models/movie";
+import { awardWin } from "@/features/score/award";
 import {
   useRevealHintMutation,
   useRevealTargetMutation,
@@ -28,6 +29,7 @@ export const useGuessGame = (genre?: number) => {
   const [hints, setHints] = useState<Hint[]>([]);
   const [hintLoading, setHintLoading] = useState<HintType | null>(null);
   const [debugTitle, setDebugTitle] = useState<string | null>(null);
+  const [awardedPoints, setAwardedPoints] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const { mutateAsync: startGame } = useStartGuessGameMutation(genre);
@@ -55,6 +57,7 @@ export const useGuessGame = (genre?: number) => {
     setError(null);
     setHints([]);
     setDebugTitle(null);
+    setAwardedPoints(null);
     try {
       const { token: fresh } = await startGame();
       setToken(fresh);
@@ -94,6 +97,7 @@ export const useGuessGame = (genre?: number) => {
         if (result.correct) {
           setTarget(solved);
           setStatus("won");
+          setAwardedPoints(awardWin(MAX_GUESSES - next.length, MAX_GUESSES));
         } else if (next.length >= MAX_GUESSES) {
           await reveal(token);
         }
@@ -134,6 +138,7 @@ export const useGuessGame = (genre?: number) => {
     hints,
     hintLoading,
     debugTitle,
+    awardedPoints,
     submitting,
     ended: status === "won" || status === "lost",
     hintsUnlocked: guesses.length >= HINT_UNLOCK_AT,

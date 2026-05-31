@@ -8,11 +8,9 @@ export const GamesScreen = () => (
   <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-10 sm:py-14 xl:px-10">
     <BackLink href="/" label="Back home" />
 
-    <div className="fr-rise mt-10 flex flex-wrap items-end justify-between gap-4">
-      <SectionTitle as="h1" className="mt-5">
-        Choose a <EmberText>game</EmberText>
-      </SectionTitle>
-    </div>
+    <SectionTitle as="h1" className="fr-rise mt-10">
+      Choose a <EmberText>game</EmberText>
+    </SectionTitle>
 
     <div className="mt-12 grid gap-5 md:grid-cols-2">
       {GAMES.map((game, i) => (

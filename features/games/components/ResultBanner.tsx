@@ -11,10 +11,12 @@ type ResultBannerProps = {
   target: MovieFacts;
   /** e.g. number of guesses taken. */
   detail?: string;
+  /** Points earned for the win — shown as a "+N pts" chip. */
+  points?: number | null;
   onPlayAgain: () => void;
 };
 
-export const ResultBanner = ({ won, target, detail, onPlayAgain }: ResultBannerProps) => {
+export const ResultBanner = ({ won, target, detail, points, onPlayAgain }: ResultBannerProps) => {
   const poster = tmdbImage(target.posterPath, "w342");
   return (
     <Card className="fr-pop relative overflow-hidden p-6 md:p-8">
@@ -36,6 +38,12 @@ export const ResultBanner = ({ won, target, detail, onPlayAgain }: ResultBannerP
             {won ? <PartyPopper size={14} /> : <Flag size={14} />}
             {won ? "Solved" : "Revealed"}
           </span>
+
+          {won && points != null && points > 0 && (
+            <span className="mt-3 inline-flex w-fit items-center gap-1.5 bg-fr-flame/15 px-3 py-1 text-sm font-semibold text-fr-flame">
+              +{points} pts
+            </span>
+          )}
 
           <DisplayHeading as="h2" className="mt-3 text-3xl md:text-4xl">
             {target.title}

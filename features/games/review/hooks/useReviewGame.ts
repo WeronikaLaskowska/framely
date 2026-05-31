@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { MovieFacts, MovieLite } from "@/models/movie";
 import type { ReviewClue } from "@/models/review";
+import { awardWin } from "@/features/score/award";
 import {
   useRevealReviewMutation,
   useStartReviewGameMutation,
@@ -24,6 +25,7 @@ export const useReviewGame = () => {
   const [guessedIds, setGuessedIds] = useState<number[]>([]);
   const [target, setTarget] = useState<MovieFacts | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [awardedPoints, setAwardedPoints] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const { mutateAsync: startReq } = useStartReviewGameMutation();
@@ -50,6 +52,7 @@ export const useReviewGame = () => {
     setGuessedIds([]);
     setTarget(null);
     setClues([]);
+    setAwardedPoints(null);
     try {
       const { token: fresh, clues: freshClues } = await startReq();
       setToken(fresh);
@@ -80,6 +83,7 @@ export const useReviewGame = () => {
         if (correct) {
           setTarget(solved);
           setStatus("won");
+          setAwardedPoints(awardWin(MAX_GUESSES - wrong, MAX_GUESSES));
         } else {
           const nextWrong = wrong + 1;
           setWrong(nextWrong);
@@ -107,6 +111,7 @@ export const useReviewGame = () => {
     clues,
     target,
     error,
+    awardedPoints,
     submitting,
     guessedIds,
     wrong,
