@@ -1,5 +1,5 @@
 import type { MovieLite } from "@/models/movie";
-import { type RawDiscover, tmdbFetch, toLite } from "@/lib/server/tmdbClient";
+import { MIN_YEAR, type RawDiscover, tmdbFetch, toLite } from "@/lib/server/tmdbClient";
 
 export const searchMovies = async (
   query: string,
@@ -16,6 +16,6 @@ export const searchMovies = async (
   return all
     .sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0))
     .map(toLite)
-    .filter((m) => m.year !== null && m.year >= 1980)
+    .filter((m) => m.year !== null && m.year >= MIN_YEAR)
     .slice(0, 8);
 };

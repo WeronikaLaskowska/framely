@@ -1,7 +1,8 @@
 import type { GenreLite, MovieLite } from "@/models/movie";
 
 export const BASE = "https://api.themoviedb.org/3";
-export const MIN_DATE = "1980-01-01";
+export const MIN_YEAR = 1980;
+export const MIN_DATE = `${MIN_YEAR}-01-01`;
 
 export const MIN_VOTE_COUNT = 2500;
 export const GENRE_MIN_VOTE_COUNT = 1000;

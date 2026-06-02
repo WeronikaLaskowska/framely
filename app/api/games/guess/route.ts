@@ -1,40 +1,10 @@
 import { NextResponse } from "next/server";
-import { getMovieFacts } from "@/lib/server/tmdbFacts";
-import { compareFacts } from "@/lib/server/compare";
-import { readTargetToken } from "@/lib/server/token";
+import { jsonError, withErrorHandling } from "@/lib/server/http";
+import { parseGuessBody, resolveCompareGuess } from "@/lib/server/resolveGuess";
 
-export async function POST(req: Request) {
-  try {
-    const { token, movieId, reveal } = (await req.json()) as {
-      token?: string;
-      movieId?: number;
-      reveal?: boolean;
-    };
-
-    const targetId = token ? readTargetToken(token) : null;
-    if (targetId === null) {
-      return NextResponse.json({ error: "Invalid game token" }, { status: 400 });
-    }
-
-    const target = await getMovieFacts(targetId);
-
-    if (reveal) {
-      return NextResponse.json({ target });
-    }
-
-    if (typeof movieId !== "number") {
-      return NextResponse.json({ error: "movieId is required" }, { status: 400 });
-    }
-
-    const guess = await getMovieFacts(movieId);
-    const result = compareFacts(guess, target);
-
-    return NextResponse.json({
-      result,
-      target: result.correct ? target : null,
-    });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Guess failed";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
-}
+export const POST = withErrorHandling("Guess failed", async (req: Request) => {
+  const outcome = await resolveCompareGuess(parseGuessBody(await req.json()));
+  if (!outcome.ok) return jsonError(outcome.error, outcome.status);
+  if (outcome.reveal) return NextResponse.json({ target: outcome.target });
+  return NextResponse.json({ result: outcome.result, target: outcome.target });
+});

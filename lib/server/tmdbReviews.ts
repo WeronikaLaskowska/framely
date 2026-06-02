@@ -8,7 +8,7 @@
  */
 import type { ReviewClue } from "@/models/review";
 import { MIN_TARGET_REVENUE, tmdbFetch } from "@/lib/server/tmdbClient";
-import { randomPopularMovie } from "@/lib/server/tmdbDiscover";
+import { pickCandidate } from "@/lib/server/tmdbDiscover";
 import { getMovieFacts } from "@/lib/server/tmdbFacts";
 
 type RawReview = {
@@ -69,17 +69,18 @@ const buildClues = (reviews: RawReview[], title: string): ReviewClue[] =>
 const getReviews = (movieId: number): Promise<RawReviews> =>
   tmdbFetch<RawReviews>(`/movie/${movieId}/reviews`);
 
-export const getReviewTarget = async (
-  maxAttempts = 16,
-): Promise<{ id: number; clues: ReviewClue[] }> => {
-  for (let i = 0; i < maxAttempts; i++) {
-    const candidate = await randomPopularMovie();
-    const facts = await getMovieFacts(candidate.id);
-    if (!isRedactable(facts.title) || facts.revenue < MIN_TARGET_REVENUE) continue;
+type ReviewTarget = { id: number; clues: ReviewClue[] };
+
+export const getReviewTarget = async (maxAttempts = 16): Promise<ReviewTarget> => {
+  const target = await pickCandidate<ReviewTarget>(async (movieId) => {
+    const facts = await getMovieFacts(movieId);
+    if (!isRedactable(facts.title) || facts.revenue < MIN_TARGET_REVENUE) return null;
 
     const { results } = await getReviews(facts.id);
     const clues = buildClues(results, facts.title);
-    if (clues.length > 0) return { id: facts.id, clues };
-  }
-  throw new Error("Could not find a film with usable reviews — try again");
+    return clues.length > 0 ? { id: facts.id, clues } : null;
+  }, maxAttempts);
+
+  if (!target) throw new Error("Could not find a film with usable reviews — try again");
+  return target;
 };

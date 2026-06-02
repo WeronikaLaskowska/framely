@@ -1,21 +1,3 @@
-import { NextResponse } from "next/server";
-import { resolveTokenGuess } from "@/lib/server/resolveGuess";
+import { tokenGuessRoute } from "@/lib/server/tokenGuessRoute";
 
-export async function POST(req: Request) {
-  try {
-    const { token, movieId, reveal } = (await req.json()) as {
-      token?: string;
-      movieId?: number;
-      reveal?: boolean;
-    };
-
-    const result = await resolveTokenGuess(token, movieId, reveal);
-    if (!result.ok) {
-      return NextResponse.json({ error: result.error }, { status: result.status });
-    }
-    return NextResponse.json({ correct: result.correct, target: result.target });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Guess failed";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
-}
+export const POST = tokenGuessRoute;

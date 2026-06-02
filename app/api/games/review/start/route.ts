@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server";
+import { withErrorHandling } from "@/lib/server/http";
 import { getReviewTarget } from "@/lib/server/tmdbReviews";
 import { makeTargetToken } from "@/lib/server/token";
 
-export async function POST() {
-  try {
-    const { id, clues } = await getReviewTarget();
-    return NextResponse.json({ token: makeTargetToken(id), clues });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Could not start game";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
-}
+export const POST = withErrorHandling("Could not start game", async () => {
+  const { id, clues } = await getReviewTarget();
+  return NextResponse.json({ token: makeTargetToken(id), clues });
+});

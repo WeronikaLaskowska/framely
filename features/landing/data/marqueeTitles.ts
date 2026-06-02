@@ -7,5 +7,5 @@ export const MARQUEE_TITLES = [
   "TITANIC",
   "JAWS",
   "SAW",
-  "THE HEREDITARY",
+  "HEREDITARY",
 ];
