@@ -1,0 +1,83 @@
+/* FRAMELY — design tokens (this is the Tailwind config, CSS-first).
+   Every value here becomes a first-class utility: bg-fr-*, text-fr-*,
+   border-fr-*, rounded-fr-*, font-display/sans/mono, animate-fr-*.
+   Components reference those utilities and never hardcode a colour or font. */
+
+@theme {
+  /* Surfaces — warm near-black "screening room" stage */
+  --color-fr-bg: #0a0805;
+  --color-fr-bg-2: #0f0c07;
+  --color-fr-bg-3: #15110a;
+  --color-fr-surface: #1a160e;
+  --color-fr-surface-2: #221c12;
+  --color-fr-surface-3: #2c2417;
+
+  /* Borders */
+  --color-fr-border: rgba(255, 240, 214, 0.07);
+  --color-fr-border-strong: rgba(255, 240, 214, 0.14);
+
+  /* Foreground / text */
+  --color-fr-fg: #fbf6ec;
+  --color-fr-fg-muted: rgba(251, 246, 236, 0.6);
+  --color-fr-fg-subtle: rgba(251, 246, 236, 0.4);
+
+  /* Accents — bright-yellow → gold → orange coin gradient */
+  --color-fr-ember: #ffab00;
+  --color-fr-amber: #ff8f00;
+  --color-fr-flame: #ffce3a;
+  --color-fr-gold: #ffe9a8;
+  --color-fr-cool: #ff7a18;
+  --color-fr-violet: #b45309;
+
+  /* Guess feedback — traffic-light signals (intentionally not re-themed) */
+  --color-fr-correct: #4ade80;
+  --color-fr-correct-bg: rgba(74, 222, 128, 0.14);
+  --color-fr-correct-border: rgba(74, 222, 128, 0.45);
+  --color-fr-close: #f5a524;
+  --color-fr-close-bg: rgba(245, 165, 36, 0.14);
+  --color-fr-close-border: rgba(245, 165, 36, 0.45);
+  --color-fr-wrong: rgba(243, 241, 249, 0.32);
+  --color-fr-wrong-bg: rgba(255, 255, 255, 0.025);
+  --color-fr-wrong-border: rgba(255, 255, 255, 0.08);
+
+  /* Radii — squared, pixel-art aesthetic */
+  --radius-fr-sm: 0px;
+  --radius-fr-md: 0px;
+  --radius-fr-lg: 0px;
+
+  /* Animations — exposed as animate-fr-* utilities (keyframes below) */
+  --animate-fr-marquee: fr-marquee 40s linear infinite;
+  --animate-fr-halo: fr-halo 7s ease-in-out infinite;
+  --animate-fr-flicker: fr-flicker 5s infinite steps(1);
+  --animate-fr-rise: fr-rise 1000ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fr-tile-flip: fr-tile-flip 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fr-shimmer: fr-shimmer 1.35s ease-in-out infinite;
+  --animate-fr-pop: fr-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-fr-ember-shift: fr-ember-shift 9s ease-in-out infinite;
+}
+
+/* Fonts are injected by next/font as variables on <html>, so they must be
+   resolved inline (the alias points at the runtime variable). */
+@theme inline {
+  --color-background: var(--color-fr-bg);
+  --color-foreground: var(--color-fr-fg);
+  --font-display: var(--font-pixel), "Press Start 2P", var(--font-space-grotesk), monospace;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Procedural film-grain textures — texture inputs for the grain/stock effects,
+   not design tokens, so they stay plain custom properties. */
+:root {
+  --fr-noise-fine: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --fr-noise-coarse: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.92  0 0 0 0 0.8  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@keyframes fr-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes fr-halo { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.05); opacity: 0.78; } }
+@keyframes fr-flicker { 0%, 96%, 100% { opacity: 1; } 97% { opacity: 0.84; } 98% { opacity: 1; } 99% { opacity: 0.92; } }
+@keyframes fr-rise { from { opacity: 0; transform: translateY(22px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes fr-tile-flip { 0% { opacity: 0; transform: rotateX(-90deg); } 100% { opacity: 1; transform: rotateX(0); } }
+@keyframes fr-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+@keyframes fr-pop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.04); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes fr-ember-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }

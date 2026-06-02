@@ -47,7 +47,7 @@ export const GuessGameScreen = ({
         <>
           {!game.ended && (
             <div className="mt-7 flex flex-col gap-3">
-              <DebugAnswer title={game.debugTitle} />
+              {/* <DebugAnswer title={game.debugTitle} /> */}
               <MovieSearch
                 onSelect={game.submitGuess}
                 disabled={game.submitting}

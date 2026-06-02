@@ -1,0 +1,38 @@
+/* FRAMELY — typography & text effects. Consumed only by common/typography/*. */
+
+.fr-display {
+  @apply font-display font-normal tracking-normal leading-[1.32];
+}
+.fr-section-title {
+  @apply font-display font-normal tracking-normal leading-[1.35] text-[clamp(1.3rem,3.4vw,2.4rem)];
+}
+.fr-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+.fr-timecode {
+  @apply text-[11px] tracking-[0.18em] uppercase text-fr-fg-subtle;
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+.fr-counter {
+  @apply text-[11px] tracking-[0.14em] text-fr-fg-subtle;
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+/* Wordmark accent gradient — animated bright yellow → gold → orange */
+.fr-ember-text {
+  @apply text-transparent bg-clip-text animate-fr-ember-shift;
+  background-image: linear-gradient(135deg, #fff1c2 0%, #ffce3a 30%, #ffab00 64%, #ff7a18 100%);
+  background-size: 200% 200%;
+}
+.fr-stock-text {
+  @apply text-transparent bg-clip-text;
+  background-image: var(--fr-noise-fine), var(--fr-noise-coarse),
+    linear-gradient(180deg, #f4f1fb 0%, #ddd3f2 55%, #b9a8dd 100%);
+  background-size: 200px 200px, 320px 320px, 100% 100%;
+  background-blend-mode: overlay, soft-light, normal;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.fr-outline-text {
+  @apply text-transparent;
+  -webkit-text-stroke: 1px rgba(243, 241, 249, 0.55);
+}
