@@ -7,18 +7,11 @@ type PosterBoardProps = {
   posterUrl: string;
   cols: number;
   rows: number;
-  /** Indices in reveal order. */
   order: number[];
-  /** How many tiles (from the front of `order`) are cleared. */
   revealedCount: number;
-  /** When true, every tile is cleared (round over). */
   fullyRevealed: boolean;
 };
 
-/**
- * The poster behind a grid of frosted tiles, framed like a screening monitor.
- * Cleared tiles fade away to expose the artwork; covered tiles stay blurred.
- */
 export const PosterBoard = ({
   posterUrl,
   cols,

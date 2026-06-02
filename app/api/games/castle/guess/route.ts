@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import { resolveTokenGuess } from "@/lib/server/resolveGuess";
 
-/**
- * POST /api/games/castle/guess
- * Body: { token: string, movieId?: number, reveal?: boolean }
- * Returns { correct, target? } — facts come back on a correct guess or reveal.
- */
 export async function POST(req: Request) {
   try {
     const { token, movieId, reveal } = (await req.json()) as {

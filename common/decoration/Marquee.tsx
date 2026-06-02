@@ -1,10 +1,6 @@
 import { Fragment } from "react";
 import { Timecode } from "@/common/typography/Timecode";
 
-/**
- * Seamless left-drifting strip. Items are rendered twice so the -50% translate
- * loops without a seam. Pauses on hover.
- */
 export const Marquee = ({ items }: { items: string[] }) => (
   <div className="fr-marquee-mask">
     <div className="fr-marquee-track">

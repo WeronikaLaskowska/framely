@@ -1,11 +1,3 @@
-/**
- * Pure comparison logic for the guess-the-movie game. Runs on the server
- * (so the target stays hidden) but has no server-only deps — easy to test.
- *
- * Verdicts: correct → green, close → amber, wrong → muted. Numeric attributes
- * also carry a direction arrow telling the player whether the secret movie's
- * value is higher (up) or lower (down) than their guess.
- */
 import type { AttributeResult, GuessResult } from "@/models/guess";
 import type { MovieFacts } from "@/models/movie";
 import { formatMoney, formatRating } from "@/lib/format";
@@ -43,11 +35,6 @@ const compareNumeric = (
   return { verdict: "wrong", direction, display };
 };
 
-/**
- * Rating (TMDB vote average, 0–10) compared by absolute distance. Green only
- * when the guess matches the target's displayed value (rounded to one decimal);
- * amber within ±RATING_CLOSE points; otherwise grey with a hint arrow.
- */
 const compareRating = (guess: MovieFacts, target: MovieFacts): AttributeResult => {
   const g = guess.rating;
   const t = target.rating;
@@ -61,11 +48,6 @@ const compareRating = (guess: MovieFacts, target: MovieFacts): AttributeResult =
   return { verdict: "wrong", direction, display };
 };
 
-/**
- * Genres are scored per-genre with no "close" tier: each shared genre is a
- * green match, the rest grey. Overall verdict is green only when the two genre
- * sets are identical.
- */
 const compareGenres = (guess: MovieFacts, target: MovieFacts): AttributeResult => {
   const guessIds = guess.genres.map((x) => x.id);
   const targetIds = new Set(target.genres.map((x) => x.id));

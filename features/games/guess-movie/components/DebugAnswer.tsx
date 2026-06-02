@@ -1,4 +1,3 @@
-/** Dev-only banner that leaks the secret film's title to speed up testing. */
 export const DebugAnswer = ({ title }: { title: string | null }) => {
   if (process.env.NODE_ENV === "production" || !title) return null;
   return (

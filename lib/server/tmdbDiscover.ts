@@ -1,4 +1,3 @@
-/** Server-only: picking well-known secret target movies (>= 1980). */
 import type { MovieLite } from "@/models/movie";
 import {
   DISCOVER_PAGE_RANGE,
@@ -9,10 +8,6 @@ import {
 } from "@/lib/server/tmdbClient";
 import { getMovieFacts } from "@/lib/server/tmdbFacts";
 
-/**
- * Discover a pool of well-known movies (>= 1980), ordered by popularity.
- * `requirePoster` keeps entries that have artwork (needed by the poster game).
- */
 export const discoverPopular = async (
   page: number,
   requirePoster = false,
@@ -25,7 +20,6 @@ export const discoverPopular = async (
   return results.map(toLite);
 };
 
-/** Pick one random popular movie, optionally constrained to a genre. */
 export const randomPopularMovie = async (
   requirePoster = false,
   genre?: number,
@@ -44,12 +38,6 @@ export const randomPopularMovie = async (
   return pick(data.results) ?? pick(first.results) ?? toLite(first.results[0]);
 };
 
-/**
- * Pick a secret target id that is both recent enough (>= 1980) and a real
- * box-office title (>= MIN_TARGET_REVENUE) so the answer is never obscure.
- * TMDB's discover endpoint can't filter on revenue, so we sample popular
- * candidates and verify their facts, retrying a few times before falling back.
- */
 export const pickTargetMovieId = async (
   maxAttempts = 8,
   genre?: number,

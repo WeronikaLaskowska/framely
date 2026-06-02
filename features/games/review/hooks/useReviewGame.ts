@@ -12,11 +12,6 @@ export const MAX_GUESSES = 6;
 
 export type ReviewGameStatus = "loading" | "playing" | "won" | "lost" | "error";
 
-/**
- * Drives a guess-from-a-review round: loads a hidden film with its title-redacted
- * reviews, reveals an extra review on each wrong guess and shows the answer on a
- * win or give-up.
- */
 export const useReviewGame = () => {
   const [token, setToken] = useState<string | null>(null);
   const [clues, setClues] = useState<ReviewClue[]>([]);

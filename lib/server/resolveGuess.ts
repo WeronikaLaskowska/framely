@@ -1,6 +1,3 @@
-/** Server-only: shared guess resolution for the token-based "name the film"
- *  games (poster, reviews). Verifies the signed token and returns the secret
- *  film's facts on a correct guess or a reveal. */
 import type { MovieFacts } from "@/models/movie";
 import { getMovieFacts } from "@/lib/server/tmdbFacts";
 import { readTargetToken } from "@/lib/server/token";

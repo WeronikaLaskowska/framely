@@ -1,6 +1,5 @@
 export type HowItWorksStep = { no: string; title: string; body: string };
 
-/** The three explainer rows on the landing "how it plays" section. */
 export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
   {
     no: "01",

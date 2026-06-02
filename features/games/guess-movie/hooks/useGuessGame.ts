@@ -15,11 +15,6 @@ export const HINT_UNLOCK_AT = 5;
 
 export type GuessGameStatus = "loading" | "playing" | "won" | "lost" | "error";
 
-/**
- * Drives a single round of Spotle: draws the secret film, records guesses,
- * unlocks hints and reveals the answer. All network work goes through the
- * guess-game query mutations; this hook owns only the local round state.
- */
 export const useGuessGame = (genre?: number) => {
   const [token, setToken] = useState<string | null>(null);
   const [guesses, setGuesses] = useState<GuessResult[]>([]);

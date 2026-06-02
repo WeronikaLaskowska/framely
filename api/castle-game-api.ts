@@ -1,4 +1,3 @@
-/** Pure HTTP for the guess-by-cast (Castle) game. */
 import { apiPost } from "@/api/client";
 import type { CastLite, MovieFacts } from "@/models/movie";
 

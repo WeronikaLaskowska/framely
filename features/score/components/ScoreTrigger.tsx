@@ -5,7 +5,6 @@ import { Trophy } from "lucide-react";
 import { usePlayerScore } from "@/features/score/usePlayerScore";
 import { ScoreProgressModal } from "@/features/score/components/ScoreProgressModal";
 
-/** Header control — opens the progress modal with rank and level checklist. */
 export const ScoreTrigger = () => {
   const [open, setOpen] = useState(false);
   const { total, rank } = usePlayerScore();

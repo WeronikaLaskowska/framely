@@ -1,4 +1,3 @@
-/** TMDB movie genres offered as a "Spotle by genre" filter. */
 import type { Genre } from "@/models/genre";
 
 export const GENRES: Genre[] = [

@@ -1,4 +1,3 @@
-/** Pure HTTP for movie autocomplete. No business logic, no transforms. */
 import { apiGet } from "@/api/client";
 import type { MovieLite } from "@/models/movie";
 

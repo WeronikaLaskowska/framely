@@ -12,10 +12,6 @@ import {
 
 export type PosterGameStatus = "select" | "loading" | "playing" | "won" | "lost" | "error";
 
-/**
- * Drives a poster-reveal round: loads a hidden poster, tracks wrong guesses
- * (which clear more tiles) and reveals the answer on a win or give-up.
- */
 export const usePosterGame = () => {
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [status, setStatus] = useState<PosterGameStatus>("select");

@@ -1,6 +1,3 @@
-/** Server-only: picking a secret film for Castle and exposing its billed cast
- *  (with headshots) in reveal order — least-billed first, the headline star
- *  last — so the clues get easier with every wrong guess. */
 import type { CastLite } from "@/models/movie";
 import {
   MIN_TARGET_REVENUE,
@@ -9,16 +6,9 @@ import {
 } from "@/lib/server/tmdbClient";
 import { randomPopularMovie } from "@/lib/server/tmdbDiscover";
 
-/** How many cast members are revealed across a round. */
 const CAST_COUNT = 6;
-/** Need at least this many billed cast WITH a photo to make a fair board. */
 const MIN_CAST = 5;
 
-/**
- * Pick a real box-office film (>= MIN_TARGET_REVENUE) with enough photographed
- * cast, and return its id plus the reveal-ordered cast. Sampling can miss
- * (too small, thin cast, missing headshots), so we retry before giving up.
- */
 export const getCastleTarget = async (
   maxAttempts = 18,
 ): Promise<{ id: number; cast: CastLite[] }> => {

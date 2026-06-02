@@ -1,4 +1,3 @@
-/** Pure HTTP for the poster-reveal game. */
 import { apiPost } from "@/api/client";
 import type { MovieFacts } from "@/models/movie";
 

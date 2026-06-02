@@ -1,9 +1,3 @@
-/**
- * Thin typed wrapper around fetch for talking to Framely's own /api routes.
- * Route handlers return JSON and, on failure, an `{ error }` payload — this
- * normalises that into a thrown ApiError so query hooks get clean rejections.
- */
-
 export class ApiError extends Error {
   constructor(
     message: string,

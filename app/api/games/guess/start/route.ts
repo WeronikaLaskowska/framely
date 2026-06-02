@@ -2,11 +2,6 @@ import { NextResponse } from "next/server";
 import { pickTargetMovieId } from "@/lib/server/tmdbDiscover";
 import { makeTargetToken } from "@/lib/server/token";
 
-/**
- * POST /api/games/guess/start
- * Picks a hidden target movie (recent + real box-office hit) and returns a
- * signed token only. No facts about the movie leak to the client.
- */
 export async function POST(req: Request) {
   try {
     let genre: number | undefined;

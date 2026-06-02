@@ -24,17 +24,11 @@ const REVIEW_MAX_LEN = 700;
 const MAX_CLUES = 3;
 const IDEAL_LEN = 350;
 
-/**
- * A title is only safe to black out when it's distinctive enough that redacting
- * it won't shred the prose — multi-word titles, or single words of 5+ chars.
- * Short common-word titles ("It", "Up", "Saw") are skipped as targets instead.
- */
 const isRedactable = (title: string): boolean =>
   title.includes(" ") || title.replace(/\s/g, "").length >= 5;
 
 const escapeRegExp = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-/** Black out the film's title (and its article-stripped form) from the prose. */
 const redactTitle = (content: string, title: string): string => {
   const variants = new Set([title]);
   const noArticle = title.replace(/^(the|a|an)\s+/i, "");
@@ -47,7 +41,6 @@ const redactTitle = (content: string, title: string): string => {
   return out;
 };
 
-/** Normalise line breaks and truncate at a word boundary. */
 const clean = (raw: string): string => {
   const text = raw.replace(/\r\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   if (text.length <= REVIEW_MAX_LEN) return text;
@@ -76,12 +69,6 @@ const buildClues = (reviews: RawReview[], title: string): ReviewClue[] =>
 const getReviews = (movieId: number): Promise<RawReviews> =>
   tmdbFetch<RawReviews>(`/movie/${movieId}/reviews`);
 
-/**
- * Pick a real box-office film (>= MIN_TARGET_REVENUE) that has at least one
- * usable, title-redacted review, and return its id alongside the clue set.
- * Sampling can miss (obscure title, too small, no English reviews, or a
- * non-redactable title), so we retry before giving up.
- */
 export const getReviewTarget = async (
   maxAttempts = 16,
 ): Promise<{ id: number; clues: ReviewClue[] }> => {

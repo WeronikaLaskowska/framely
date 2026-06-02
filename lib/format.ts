@@ -1,5 +1,3 @@
-/** Formatting helpers shared across the UI. */
-
 export function formatMoney(value: number): string {
   if (!value || value <= 0) return "—";
   if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(2)}B`;
@@ -13,7 +11,6 @@ export function formatRating(value: number): string {
   return value.toFixed(1);
 }
 
-/** TMDB image URL builder. size e.g. "w200", "w500", "original". */
 export function tmdbImage(path: string | null, size = "w500"): string | null {
   if (!path) return null;
   return `https://image.tmdb.org/t/p/${size}${path}`;

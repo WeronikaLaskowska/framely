@@ -2,12 +2,6 @@ import { NextResponse } from "next/server";
 import { getReviewTarget } from "@/lib/server/tmdbReviews";
 import { makeTargetToken } from "@/lib/server/token";
 
-/**
- * POST /api/games/review/start
- * Picks a hidden movie that has usable reviews and returns its title-redacted
- * clues plus a signed token. The title is never sent — the player reads the
- * verdict and names the film.
- */
 export async function POST() {
   try {
     const { id, clues } = await getReviewTarget();

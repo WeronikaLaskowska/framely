@@ -7,17 +7,10 @@ const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·:/";
 type DecodeTextProps = {
   text: string;
   className?: string;
-  /** ms before decoding starts. */
   delay?: number;
-  /** total decode duration in ms. */
   duration?: number;
 };
 
-/**
- * Renders `text` as a brief "decode" — each character resolves from random
- * glyphs to its final letter, left to right. Runs once on mount. Respects
- * reduced-motion (shows the final text immediately).
- */
 export const DecodeText = ({ text, className, delay = 0, duration = 900 }: DecodeTextProps) => {
   const [output, setOutput] = useState(text);
   const frame = useRef<number>(0);

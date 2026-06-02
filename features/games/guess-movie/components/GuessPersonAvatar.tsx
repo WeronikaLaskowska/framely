@@ -5,7 +5,6 @@ import { tmdbImage } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import { Timecode } from "@/common/typography/Timecode";
 
-/** "Eddie Murphy" → "E. Murphy" to keep avatar captions compact. */
 const shortName = (name: string): string => {
   const parts = name.trim().split(/\s+/);
   if (parts.length < 2) return name;
@@ -15,7 +14,6 @@ const shortName = (name: string): string => {
 type GuessPersonAvatarProps = {
   person: CastLite | null;
   role: string;
-  /** Whether this person also appears in the secret film. */
   matched: boolean;
 };
 

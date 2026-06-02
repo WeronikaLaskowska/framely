@@ -5,9 +5,7 @@ export type MetricConfig = {
   key: HiloMetric;
   label: string;
   blurb: string;
-  /** Pull the comparable number off a card. */
   value: (c: HiloCard) => number;
-  /** Render that number for display. */
   format: (n: number) => string;
 };
 

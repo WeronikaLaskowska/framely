@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server";
 import { resolveTokenGuess } from "@/lib/server/resolveGuess";
 
-/**
- * POST /api/games/poster/guess
- * Body: { token: string, movieId?: number, reveal?: boolean }
- * Returns { correct, target? }. The target's facts come back when the guess
- * is right or when the player reveals (gives up / runs out of attempts).
- */
 export async function POST(req: Request) {
   try {
     const { token, movieId, reveal } = (await req.json()) as {

@@ -1,4 +1,3 @@
-/** Pure HTTP for the Higher or Lower game. */
 import { apiGet } from "@/api/client";
 import type { HiloCard } from "@/models/hilo";
 

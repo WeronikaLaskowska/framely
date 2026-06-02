@@ -3,12 +3,6 @@ import { pickTargetMovieId } from "@/lib/server/tmdbDiscover";
 import { getMovieFacts } from "@/lib/server/tmdbFacts";
 import { makeTargetToken } from "@/lib/server/token";
 
-/**
- * POST /api/games/poster/start
- * Picks a hidden box-office movie (>= 50M, like the other games) that has a
- * poster and returns its poster path plus a signed token. The title is never
- * sent — the player must read the artwork.
- */
 export async function POST() {
   try {
     const id = await pickTargetMovieId();

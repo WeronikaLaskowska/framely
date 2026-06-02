@@ -1,4 +1,3 @@
-/** Server-only: deck builder for the Higher or Lower game. */
 import type { HiloCard } from "@/models/hilo";
 import {
   DISCOVER_PAGE_RANGE,
@@ -10,7 +9,6 @@ import {
   yearOf,
 } from "@/lib/server/tmdbClient";
 
-/** In-place Fisher–Yates shuffle. */
 const shuffle = <T>(arr: T[]): T[] => {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -19,7 +17,6 @@ const shuffle = <T>(arr: T[]): T[] => {
   return arr;
 };
 
-/** Light detail fetch with just the two comparable stats (no credits). */
 const getMovieScore = async (id: number): Promise<HiloCard> => {
   const d = await tmdbFetch<RawDetails>(`/movie/${id}`);
   return {
@@ -32,12 +29,6 @@ const getMovieScore = async (id: number): Promise<HiloCard> => {
   };
 };
 
-/**
- * Build a shuffled deck of well-known films for Higher or Lower. Each card
- * carries both stats (box office + rating) so the client can play either mode.
- * Only films with a poster and a real box office make the cut, so comparisons
- * stay between recognisable titles.
- */
 export const getHiloDeck = async (size = 30): Promise<HiloCard[]> => {
   const first = await rawDiscover(1);
   const totalPages = Math.min(first.total_pages || 1, DISCOVER_PAGE_RANGE);

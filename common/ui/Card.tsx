@@ -6,10 +6,6 @@ type CardProps<T extends ElementType> = {
   className?: string;
 } & Omit<ComponentPropsWithoutRef<T>, "as" | "className">;
 
-/**
- * Frosted, hard-shadowed frame used across games, modals and previews.
- * Polymorphic via `as` so it can render a div, ul, article, etc.
- */
 export const Card = <T extends ElementType = "div">({
   as,
   className,

@@ -8,9 +8,7 @@ import { Counter } from "@/common/typography/Counter";
 type HiloPanelProps = {
   card: HiloCard;
   caption: string;
-  /** Revealed stat text, or null while hidden. */
   valueText: string | null;
-  /** true = correct, false = wrong, null = not yet judged. */
   outcome?: boolean | null;
   children?: ReactNode;
 };

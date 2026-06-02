@@ -1,26 +1,13 @@
-/**
- * Server-only TheMovieDB core client. Holds the v3 key auth, the shared fetch
- * helper, raw response shapes and the discover query that every higher-level
- * module builds on. Never import this from a client component — the key must
- * stay on the server.
- */
 import type { GenreLite, MovieLite } from "@/models/movie";
 
 export const BASE = "https://api.themoviedb.org/3";
 export const MIN_DATE = "1980-01-01";
 
-/**
- * Familiarity floor for the movie pool. `vote_count` is the best proxy for how
- * widely seen a film is — raising it trims obscure titles. Genre pools are
- * naturally smaller, so they use a lower floor to keep enough variety.
- */
 export const MIN_VOTE_COUNT = 2500;
 export const GENRE_MIN_VOTE_COUNT = 1000;
 
-/** How many top-popularity discover pages we sample from (~20 titles/page). */
 export const DISCOVER_PAGE_RANGE = 40;
 
-/** Minimum worldwide box office for a movie to be eligible as a secret target. */
 export const MIN_TARGET_REVENUE = 50_000_000;
 
 const apiKey = (): string => {
@@ -88,13 +75,11 @@ export const toLite = (m: RawMovie): MovieLite => ({
   posterPath: m.poster_path,
 });
 
-/** Genre id → name lookup, cached for a day. */
 export const getGenreMap = async (): Promise<Map<number, string>> => {
   const data = await tmdbFetch<RawGenres>("/genre/movie/list");
   return new Map(data.genres.map((g) => [g.id, g.name]));
 };
 
-/** Raw discover query for well-known movies (>= 1980), optionally by genre. */
 export const rawDiscover = (page: number, genre?: number): Promise<RawDiscover> => {
   const params: Record<string, string | number> = {
     sort_by: "popularity.desc",

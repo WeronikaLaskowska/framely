@@ -6,14 +6,9 @@ import { cn } from "@/lib/cn";
 type ScrollRevealProps = {
   children: ReactNode;
   className?: string;
-  /** Delay in ms before the reveal transition starts once in view. */
   delay?: number;
 };
 
-/**
- * Wraps content with the `.fr-reveal` entrance, toggled to `.is-visible` the
- * first time it scrolls into view via IntersectionObserver.
- */
 export const ScrollReveal = ({ children, className, delay = 0 }: ScrollRevealProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);

@@ -5,11 +5,6 @@ import Lottie from "lottie-react";
 import { CornerFrame } from "@/common/decoration/CornerFrame";
 import { Timecode } from "@/common/typography/Timecode";
 
-/**
- * The hero centerpiece: the `public/animations/tv.json` Lottie playing inside a
- * letterboxed "screening monitor" — halo behind, corner brackets, scanlines and
- * a subtle CRT flicker. The JSON is fetched at runtime, never bundled.
- */
 export const TvHero = () => {
   const [data, setData] = useState<object | null>(null);
 

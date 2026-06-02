@@ -9,7 +9,6 @@ import {
   subscribeScore,
 } from "@/features/score/scoreStore";
 
-/** Reactive view of the player's saved score, rank and progress to the next rank. */
 export const usePlayerScore = () => {
   const { total, wins } = useSyncExternalStore(
     subscribeScore,

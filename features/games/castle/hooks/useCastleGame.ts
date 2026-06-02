@@ -9,11 +9,6 @@ import {
 
 export type CastleGameStatus = "loading" | "playing" | "won" | "lost" | "error";
 
-/**
- * Drives a Castle round: loads a hidden film with its billed cast, reveals one
- * more face on each wrong guess and shows the answer on a win or give-up. The
- * round lasts as long as there are cast members to uncover.
- */
 export const useCastleGame = () => {
   const [token, setToken] = useState<string | null>(null);
   const [cast, setCast] = useState<CastLite[]>([]);
@@ -124,7 +119,6 @@ export const useCastleGame = () => {
   };
 };
 
-/** When the round is over the whole cast is shown; otherwise 1 + wrong guesses. */
 const computeRevealedCount = (
   wrong: number,
   total: number,

@@ -18,7 +18,6 @@ type ModalProps = {
   className?: string;
 };
 
-/** Pixel-styled dialog rendered in a portal. Closes on Escape or backdrop. */
 export const Modal = ({ open, onClose, title, icon, children, className }: ModalProps) => {
   // SSR-safe client flag: portals need `document`, which only exists after the
   // first client render. `false` on the server, `true` on the client.

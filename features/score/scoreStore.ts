@@ -1,7 +1,3 @@
-/** A tiny external store for the player's lifetime score, persisted to
- *  localStorage and shared across the app via useSyncExternalStore. Kept
- *  framework-light so any component (or game hook) can read or award points. */
-
 export type ScoreState = { total: number; wins: number };
 
 const KEY = "framely.player.score";
@@ -43,7 +39,6 @@ export const subscribeScore = (listener: () => void): (() => void) => {
 export const getScoreSnapshot = (): ScoreState => current();
 export const getScoreServerSnapshot = (): ScoreState => SERVER_STATE;
 
-/** Add points for a single won game and bump the win counter. */
 export const addScore = (points: number): void => {
   if (!Number.isFinite(points) || points <= 0) return;
   const c = current();

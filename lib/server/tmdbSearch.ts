@@ -1,13 +1,6 @@
-/** Server-only: title search for guess autocomplete (>= 1980). */
 import type { MovieLite } from "@/models/movie";
 import { type RawDiscover, tmdbFetch, toLite } from "@/lib/server/tmdbClient";
 
-/**
- * Search movies by title (>= 1980) for guess autocomplete. When `genre` is set
- * (Spotle by genre), only titles tagged with that genre are returned. Short
- * queries flood literal matches, so we pull a few pages and re-rank by
- * popularity before trimming to the strongest eight.
- */
 export const searchMovies = async (
   query: string,
   genre?: number,

@@ -6,7 +6,6 @@ import { Poster } from "@/common/ui/Poster";
 type MovieSearchOptionProps = {
   movie: MovieLite;
   active: boolean;
-  /** Already guessed — dimmed and not selectable. */
   used: boolean;
   onSelect: () => void;
   onHover: () => void;

@@ -11,17 +11,11 @@ import { MovieSearchCard } from "@/features/games/components/MovieSearchCard";
 type MovieSearchProps = {
   onSelect: (movie: MovieLite) => void;
   disabled?: boolean;
-  /** Movie ids already guessed — shown dimmed and not selectable. */
   excludeIds?: number[];
   placeholder?: string;
-  /** Restrict autocomplete to a single TMDB genre id (Spotle by genre). */
   genre?: number;
 };
 
-/**
- * Debounced title autocomplete backed by useMovieSearchQuery. Picking a result
- * fires onSelect and clears the field. Keyboard: ↑/↓ to move, Enter to choose.
- */
 export const MovieSearch = ({
   onSelect,
   disabled,

@@ -5,13 +5,6 @@ import type { Hint, HintType } from "@/models/hint";
 
 const HINT_TYPES: HintType[] = ["cast", "decade", "studio"];
 
-/**
- * POST /api/games/guess/hint
- * Body: { token: string, type: HintType }
- *
- * Returns a single revealed fact about the hidden target — never the whole
- * movie — so a player can buy a nudge without the answer leaking wholesale.
- */
 export async function POST(req: Request) {
   try {
     const { token, type } = (await req.json()) as { token?: string; type?: HintType };

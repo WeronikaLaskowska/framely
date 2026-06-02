@@ -3,11 +3,6 @@
 import { type ReactNode, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-/**
- * App-wide TanStack Query provider. The client is created once per browser
- * session via useState so it survives re-renders but is never shared between
- * requests on the server.
- */
 export const QueryProvider = ({ children }: { children: ReactNode }) => {
   const [client] = useState(
     () =>

@@ -3,14 +3,6 @@ import { getMovieFacts } from "@/lib/server/tmdbFacts";
 import { compareFacts } from "@/lib/server/compare";
 import { readTargetToken } from "@/lib/server/token";
 
-/**
- * POST /api/games/guess
- * Body: { token: string, movieId?: number, reveal?: boolean }
- *
- * - With movieId: compares the guess against the hidden target and returns a
- *   GuessResult. The target's facts are only included when the guess is right.
- * - With reveal: returns the target's facts (used by "give up").
- */
 export async function POST(req: Request) {
   try {
     const { token, movieId, reveal } = (await req.json()) as {

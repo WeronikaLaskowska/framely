@@ -1,4 +1,3 @@
-/** Pure HTTP for the guess-the-movie (Spotle) game. */
 import { apiPost } from "@/api/client";
 import type { GuessResult } from "@/models/guess";
 import type { Hint, HintType } from "@/models/hint";

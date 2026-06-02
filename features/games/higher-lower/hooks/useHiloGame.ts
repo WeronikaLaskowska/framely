@@ -9,10 +9,6 @@ export type HiloStatus = "select" | "loading" | "playing" | "over" | "error";
 
 const REVEAL_MS = 1500;
 
-/**
- * Drives a Higher or Lower run: loads a deck, compares the chosen stat between
- * consecutive films and tracks the streak (and best streak) until a wrong call.
- */
 export const useHiloGame = () => {
   const [metric, setMetric] = useState<HiloMetric | null>(null);
   const [status, setStatus] = useState<HiloStatus>("select");

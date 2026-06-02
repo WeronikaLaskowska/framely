@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { searchMovies } from "@/lib/server/tmdbSearch";
 
-/** GET /api/movies/search?q=blade&genre=28 — autocomplete for guesses (>= 1980). */
 export async function GET(req: Request) {
   const params = new URL(req.url).searchParams;
   const q = params.get("q") ?? "";

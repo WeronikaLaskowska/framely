@@ -7,7 +7,6 @@ type GuessToolbarProps = {
   maxGuesses: number;
   hintsUnlocked: boolean;
   hintUnlockAt: number;
-  /** Guesses still required before hints unlock. */
   guessesToUnlock: number;
   onTutorial: () => void;
   onHint: () => void;

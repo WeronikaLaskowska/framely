@@ -1,4 +1,3 @@
-/** Pure HTTP for the guess-from-a-review game. */
 import { apiPost } from "@/api/client";
 import type { MovieFacts } from "@/models/movie";
 import type { ReviewClue } from "@/models/review";

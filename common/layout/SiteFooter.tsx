@@ -1,7 +1,5 @@
-import Image from "next/image";
 import { Timecode } from "@/common/typography/Timecode";
 
-/** Footer styled as an end-of-reel slate with required TMDB attribution. */
 export const SiteFooter = () => (
   <footer className="border-t-2 border-fr-border-strong">
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 py-10 xl:px-10">

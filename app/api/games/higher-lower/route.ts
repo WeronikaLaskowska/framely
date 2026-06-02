@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server";
 import { getHiloDeck } from "@/lib/server/tmdbHilo";
 
-/**
- * GET /api/games/higher-lower
- * Returns a shuffled deck of well-known films, each carrying its box office and
- * rating so the client can run either Higher or Lower mode. No hidden answer —
- * the stats are the game — so no token is needed.
- */
 export async function GET() {
   try {
     const deck = await getHiloDeck();

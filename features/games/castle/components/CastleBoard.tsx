@@ -7,8 +7,6 @@ type CastleBoardProps = {
   revealedCount: number;
 };
 
-/** Grid of billed faces; the first `revealedCount` show a headshot + name, the
- *  rest stay as anonymous silhouettes until a wrong guess uncovers them. */
 export const CastleBoard = ({ cast, revealedCount }: CastleBoardProps) => (
   <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-3">
     {cast.map((member, i) => {

@@ -1,4 +1,3 @@
-/** The four extending corner brackets used inside cards and frames. */
 export const CornerFrame = () => (
   <div className="fr-corners" aria-hidden>
     <span className="fr-corner fr-corner--tl" />

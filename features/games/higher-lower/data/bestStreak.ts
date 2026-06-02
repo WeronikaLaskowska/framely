@@ -1,6 +1,5 @@
 import type { HiloMetric } from "@/models/hilo";
 
-/** Per-metric best streak, persisted in localStorage. */
 const bestKey = (metric: HiloMetric) => `framely.hilo.best.${metric}`;
 
 export const readBest = (metric: HiloMetric): number => {

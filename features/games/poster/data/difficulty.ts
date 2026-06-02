@@ -6,9 +6,7 @@ export type DiffConfig = {
   attempts: number;
   cols: number;
   rows: number;
-  /** Tiles already clear when the round opens. */
   initialReveal: number;
-  /** Extra tiles cleared on each wrong guess. */
   perGuess: number;
 };
 
@@ -20,7 +18,6 @@ export const DIFFICULTY: Record<Difficulty, DiffConfig> = {
 
 export const DIFFICULTY_ORDER: Difficulty[] = ["easy", "medium", "hard"];
 
-/** Fisher–Yates shuffle of tile indices, so reveals appear in random order. */
 export const shuffledIndices = (total: number): number[] => {
   const arr = Array.from({ length: total }, (_, i) => i);
   for (let i = arr.length - 1; i > 0; i--) {

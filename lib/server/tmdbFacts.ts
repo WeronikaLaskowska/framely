@@ -1,4 +1,3 @@
-/** Server-only: full normalized facts for a single movie. */
 import type { CastLite, MovieFacts } from "@/models/movie";
 import { type RawDetails, tmdbFetch, yearOf } from "@/lib/server/tmdbClient";
 

@@ -9,9 +9,7 @@ import { Counter } from "@/common/typography/Counter";
 type ResultBannerProps = {
   won: boolean;
   target: MovieFacts;
-  /** e.g. number of guesses taken. */
   detail?: string;
-  /** Points earned for the win — shown as a "+N pts" chip. */
   points?: number | null;
   onPlayAgain: () => void;
 };

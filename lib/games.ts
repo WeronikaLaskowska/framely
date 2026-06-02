@@ -1,6 +1,3 @@
-/** Static metadata for the games — shared by the landing preview and the
- *  /games selection screen so the copy stays in one place. */
-
 export type GameMeta = {
   slug: string;
   href: string;

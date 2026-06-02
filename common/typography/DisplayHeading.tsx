@@ -7,7 +7,6 @@ type DisplayHeadingProps = {
   children: ReactNode;
 };
 
-/** Large pixel-art display heading (the game/hero titles). */
 export const DisplayHeading = ({
   as: Tag = "h1",
   className,

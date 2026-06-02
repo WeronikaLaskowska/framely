@@ -7,7 +7,6 @@ type SectionTitleProps = {
   children: ReactNode;
 };
 
-/** The pixel-art heading used to introduce a section. Defaults to an h2. */
 export const SectionTitle = ({
   as: Tag = "h2",
   className,

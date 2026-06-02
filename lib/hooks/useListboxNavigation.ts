@@ -3,7 +3,6 @@ import { useState, type KeyboardEvent } from "react";
 type ListboxNavigation = {
   active: number;
   setActive: (index: number) => void;
-  /** Wire onto the input/list element to drive ↑/↓ + Enter + Escape. */
   onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
 };
 
@@ -14,11 +13,6 @@ type Options<T> = {
   onClose: () => void;
 };
 
-/**
- * Roving-highlight keyboard navigation for a listbox/combobox: ↑/↓ wrap through
- * `items`, Enter selects the active one, Escape closes. Owns the active index so
- * consumers only render highlight state.
- */
 export function useListboxNavigation<T>({
   items,
   isOpen,

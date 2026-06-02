@@ -5,7 +5,6 @@ const CHIP_UNMATCHED = "border-fr-border-strong bg-white/[0.02] text-fr-fg-muted
 
 type MovieGenreProps = {
   name: string;
-  /** Green when this genre is shared with the secret film, grey otherwise. */
   matched: boolean;
 };
 

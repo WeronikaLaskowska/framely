@@ -6,15 +6,9 @@ import { cn } from "@/lib/cn";
 type HoverCardProps = {
   children: ReactNode;
   className?: string;
-  /** Add a subtle 3D tilt toward the cursor. */
   tilt?: boolean;
 };
 
-/**
- * Card wrapper that writes --mouse-x / --mouse-y (for the spotlight) and,
- * when `tilt` is set, --tilt-x / --tilt-y for a gentle 3D lean toward the
- * cursor. All visuals live in `.fr-hover-card` in globals.css.
- */
 export const HoverCard = ({ children, className, tilt = false }: HoverCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
 

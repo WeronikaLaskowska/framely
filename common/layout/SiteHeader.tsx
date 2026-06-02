@@ -1,5 +1,3 @@
-import Link from "next/link";
-import Image from "next/image";
 import { ButtonLink } from "@/common/ui/ButtonLink";
 import { ScoreTrigger } from "@/features/score/components/ScoreTrigger";
 

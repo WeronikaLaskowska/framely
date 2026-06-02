@@ -1,4 +1,3 @@
-/** Film titles scrolled in the hero marquee. */
 export const MARQUEE_TITLES = [
   "SHREK",
   "WHITE CHICKS",
