@@ -7,6 +7,7 @@ import { tmdbImage } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import { Modal } from "@/common/ui/Modal";
 import { Timecode } from "@/common/typography/Timecode";
+import { MutedText } from "@/common/typography/MutedText";
 
 const OPTIONS: { type: HintType; label: string; desc: string; icon: ReactNode }[] = [
   { type: "cast", label: "Reveal a cast member", desc: "Unmask one of the headline actors.", icon: <Users size={18} /> },
@@ -29,9 +30,9 @@ export const HintModal = ({ open, onClose, revealed, loadingType, onReveal }: Hi
     title="Take a hint"
     icon={<Lightbulb size={16} className="text-fr-flame" />}
   >
-    <p className="text-sm leading-relaxed text-fr-fg-muted">
+    <MutedText className="leading-relaxed">
       Stuck? Peek behind the curtain. Each clue can be revealed once.
-    </p>
+    </MutedText>
 
     <div className="mt-4 flex flex-col gap-2.5">
       {OPTIONS.map((opt) => {

@@ -2,6 +2,7 @@
 
 import { GraduationCap } from "lucide-react";
 import { Modal } from "@/common/ui/Modal";
+import { MutedText } from "@/common/typography/MutedText";
 
 const LEGEND = [
   { cls: "fr-tile--correct", title: "Green — exact", body: "The attribute matches the secret film exactly." },
@@ -23,10 +24,10 @@ export const TutorialModal = ({ open, onClose }: { open: boolean; onClose: () =>
     title="How to play"
     icon={<GraduationCap size={16} className="text-fr-flame" />}
   >
-    <p className="text-sm leading-relaxed text-fr-fg-muted">
+    <MutedText className="leading-relaxed">
       A secret movie is drawn each round. Guess films to reveal how they
       compare — colour tells you how warm you are.
-    </p>
+    </MutedText>
 
     <div className="mt-4 flex flex-col gap-2">
       {LEGEND.map((l) => (

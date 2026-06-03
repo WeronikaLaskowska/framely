@@ -1,7 +1,9 @@
-import { Quote, Star } from "lucide-react";
+import { Quote } from "lucide-react";
 import type { ReviewClue } from "@/models/review";
 import { Card } from "@/common/ui/Card";
 import { Timecode } from "@/common/typography/Timecode";
+import { ClueRating } from "@/features/games/review/components/ClueRating";
+import { ClueAuthor } from "@/features/games/review/components/ClueAuthor";
 
 type ReviewClueCardProps = { clue: ReviewClue; index: number };
 
@@ -11,11 +13,7 @@ export const ReviewClueCard = ({ clue, index }: ReviewClueCardProps) => (
       <Timecode className="text-fr-flame">
         Review {String(index + 1).padStart(2, "0")}
       </Timecode>
-      {clue.rating != null && (
-        <span className="inline-flex items-center gap-1 text-xs text-fr-fg-muted">
-          <Star size={12} className="text-fr-flame" /> {clue.rating}/10
-        </span>
-      )}
+      {clue.rating != null && <ClueRating rating={clue.rating} />}
     </div>
 
     <div className="mt-3 flex gap-3">
@@ -25,6 +23,6 @@ export const ReviewClueCard = ({ clue, index }: ReviewClueCardProps) => (
       </p>
     </div>
 
-    <p className="mt-3 text-right text-xs text-fr-fg-subtle">— {clue.author}</p>
+    <ClueAuthor author={clue.author} />
   </Card>
 );

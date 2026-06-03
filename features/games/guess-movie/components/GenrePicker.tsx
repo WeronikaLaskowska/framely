@@ -1,13 +1,13 @@
 import type { Genre } from "@/models/genre";
 import { GENRES } from "@/lib/genres";
-import { BackLink } from "@/common/ui/BackLink";
 import { Button } from "@/common/ui/Button";
 import { EmberText } from "@/common/typography/EmberText";
 import { GameHeader } from "@/features/games/components/GameHeader";
+import { GameTopBar } from "@/features/games/components/GameTopBar";
 
 export const GenrePicker = ({ onPick }: { onPick: (genre: Genre) => void }) => (
   <main className="mx-auto w-full max-w-4xl flex-1 px-5 py-8 sm:py-10">
-    <BackLink href="/games" label="Games" />
+    <GameTopBar backHref="/games" />
 
     <GameHeader
       // badge="Spotle · by genre"

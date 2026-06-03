@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Badge } from "@/common/ui/Badge";
 import { DisplayHeading } from "@/common/typography/DisplayHeading";
+import { MutedText } from "@/common/typography/MutedText";
 
 type GameHeaderProps = {
   badge?: ReactNode;
@@ -14,6 +15,6 @@ export const GameHeader = ({ badge, title, blurb }: GameHeaderProps) => (
     <DisplayHeading className="mt-4 text-[clamp(2.25rem,6vw,3.75rem)]">
       {title}
     </DisplayHeading>
-    {blurb && <p className="mt-2 max-w-xl text-sm text-fr-fg-muted">{blurb}</p>}
+    {blurb && <MutedText className="mt-2 max-w-xl">{blurb}</MutedText>}
   </header>
 );

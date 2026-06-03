@@ -2,9 +2,9 @@
 
 import { Trophy } from "lucide-react";
 import { useHiloGame } from "@/features/games/higher-lower/hooks/useHiloGame";
-import { BackLink } from "@/common/ui/BackLink";
 import { QueryWrapper } from "@/common/ui/QueryWrapper";
 import { Counter } from "@/common/typography/Counter";
+import { GameTopBar } from "@/features/games/components/GameTopBar";
 import { HiloHeader } from "@/features/games/higher-lower/components/HiloHeader";
 import { HiloMetricPicker } from "@/features/games/higher-lower/components/HiloMetricPicker";
 import { HiloBoard } from "@/features/games/higher-lower/components/HiloBoard";
@@ -15,17 +15,19 @@ export const HiloGameScreen = () => {
 
   return (
     <main className="mx-auto w-full max-w-4xl flex-1 px-5 py-8 sm:py-10">
-      <div className="flex items-center justify-between">
-        <BackLink href="/games" label="Games" />
-        {game.status === "playing" && (
-          <div className="flex items-center gap-4">
-            <Counter>Streak {game.score}</Counter>
-            <Counter className="inline-flex items-center gap-1.5 text-fr-fg-subtle">
-              <Trophy size={13} /> {game.best}
-            </Counter>
-          </div>
-        )}
-      </div>
+      <GameTopBar
+        backHref="/games"
+        right={
+          game.status === "playing" && (
+            <div className="flex items-center gap-4">
+              <Counter>Streak {game.score}</Counter>
+              <Counter className="inline-flex items-center gap-1.5 text-fr-fg-subtle">
+                <Trophy size={13} /> {game.best}
+              </Counter>
+            </div>
+          )
+        }
+      />
 
       <HiloHeader />
 

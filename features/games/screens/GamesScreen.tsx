@@ -1,12 +1,12 @@
 import { GAMES } from "@/lib/games";
 import { GameCell } from "@/features/games/components/GameCell";
-import { BackLink } from "@/common/ui/BackLink";
+import { GameTopBar } from "@/features/games/components/GameTopBar";
 import { SectionTitle } from "@/common/typography/SectionTitle";
 import { EmberText } from "@/common/typography/EmberText";
 
 export const GamesScreen = () => (
   <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-10 sm:py-14 xl:px-10">
-    <BackLink href="/" label="Back home" />
+    <GameTopBar backHref="/" backLabel="Back home" />
 
     <SectionTitle as="h1" className="fr-rise mt-10">
       Choose a <EmberText>game</EmberText>

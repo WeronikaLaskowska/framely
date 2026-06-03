@@ -1,12 +1,16 @@
 "use client";
 
 import { usePosterGame } from "@/features/games/poster/hooks/usePosterGame";
-import { BackLink } from "@/common/ui/BackLink";
+import { plural } from "@/lib/format";
 import { Button } from "@/common/ui/Button";
 import { QueryWrapper } from "@/common/ui/QueryWrapper";
-import { Counter } from "@/common/typography/Counter";
+import { ErrorState } from "@/common/ui/ErrorState";
+import { Caption } from "@/common/typography/Caption";
 import { MovieSearch } from "@/features/games/components/MovieSearch";
 import { ResultBanner } from "@/features/games/components/ResultBanner";
+import { GameTopBar } from "@/features/games/components/GameTopBar";
+import { GuessesLeft } from "@/features/games/components/GuessesLeft";
+import { GiveUpButton } from "@/features/games/components/GiveUpButton";
 import { PosterGameHeader } from "@/features/games/poster/components/PosterGameHeader";
 import { PosterDifficultyPicker } from "@/features/games/poster/components/PosterDifficultyPicker";
 import { PosterBoard } from "@/features/games/poster/components/PosterBoard";
@@ -17,14 +21,10 @@ export const PosterGameScreen = () => {
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-8 sm:py-10">
-      <div className="flex items-center justify-between">
-        <BackLink href="/games" label="Games" />
-        {game.status === "playing" && (
-          <Counter>
-            {game.attemptsLeft} {game.attemptsLeft === 1 ? "guess" : "guesses"} left
-          </Counter>
-        )}
-      </div>
+      <GameTopBar
+        backHref="/games"
+        right={game.status === "playing" && <GuessesLeft count={game.attemptsLeft} />}
+      />
 
       <PosterGameHeader />
 
@@ -57,19 +57,9 @@ export const PosterGameScreen = () => {
                     excludeIds={game.guessedIds}
                     placeholder="Name this movie…"
                   />
-                  {game.error && <span className="text-sm text-fr-close">{game.error}</span>}
-                  {game.guessedIds.length > 0 && (
-                    <p className="text-center text-xs uppercase tracking-widest text-fr-fg-subtle">
-                      {game.wrong} wrong so far
-                    </p>
-                  )}
-                  <button
-                    type="button"
-                    onClick={game.giveUp}
-                    className="mx-auto text-xs uppercase tracking-widest text-fr-fg-subtle transition-colors hover:text-fr-close"
-                  >
-                    Give up
-                  </button>
+                  <ErrorState variant="inline" message={game.error} />
+                  {game.guessedIds.length > 0 && <Caption>{game.wrong} wrong so far</Caption>}
+                  <GiveUpButton onClick={game.giveUp} />
                 </div>
               ) : (
                 game.target && (
@@ -79,7 +69,7 @@ export const PosterGameScreen = () => {
                       target={game.target}
                       detail={
                         game.status === "won"
-                          ? `Solved with ${game.wrong} ${game.wrong === 1 ? "miss" : "misses"}`
+                          ? `Solved with ${game.wrong} ${plural(game.wrong, "miss", "misses")}`
                           : undefined
                       }
                       points={game.awardedPoints}

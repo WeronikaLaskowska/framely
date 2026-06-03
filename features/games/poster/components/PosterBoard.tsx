@@ -24,9 +24,9 @@ export const PosterBoard = ({
   const revealed = useMemo(() => new Set(order.slice(0, revealedCount)), [order, revealedCount]);
 
   return (
-    <div className="relative mx-auto w-full max-w-[340px]">
+    <div className="relative mx-auto w-full max-w-85">
       <div className="fr-monitor__halo" aria-hidden />
-      <div className="fr-monitor relative aspect-[2/3]">
+      <div className="fr-monitor relative aspect-2/3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={posterUrl}

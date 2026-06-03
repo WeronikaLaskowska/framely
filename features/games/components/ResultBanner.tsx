@@ -5,6 +5,7 @@ import { Card } from "@/common/ui/Card";
 import { Button } from "@/common/ui/Button";
 import { DisplayHeading } from "@/common/typography/DisplayHeading";
 import { Counter } from "@/common/typography/Counter";
+import { PointsBadge } from "@/features/games/components/PointsBadge";
 
 type ResultBannerProps = {
   won: boolean;
@@ -37,11 +38,7 @@ export const ResultBanner = ({ won, target, detail, points, onPlayAgain }: Resul
             {won ? "Solved" : "Revealed"}
           </span>
 
-          {won && points != null && points > 0 && (
-            <span className="mt-3 inline-flex w-fit items-center gap-1.5 bg-fr-flame/15 px-3 py-1 text-sm font-semibold text-fr-flame">
-              +{points} pts
-            </span>
-          )}
+          {won && <PointsBadge points={points} className="w-fit" />}
 
           <DisplayHeading as="h2" className="mt-3 text-3xl md:text-4xl">
             {target.title}

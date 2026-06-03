@@ -6,10 +6,13 @@ import {
   MAX_GUESSES,
   useGuessGame,
 } from "@/features/games/guess-movie/hooks/useGuessGame";
-import { BackLink } from "@/common/ui/BackLink";
+import { plural } from "@/lib/format";
 import { QueryWrapper } from "@/common/ui/QueryWrapper";
+import { ErrorState } from "@/common/ui/ErrorState";
 import { MovieSearch } from "@/features/games/components/MovieSearch";
 import { ResultBanner } from "@/features/games/components/ResultBanner";
+import { GameTopBar } from "@/features/games/components/GameTopBar";
+import { GuessEmptyHint } from "@/features/games/guess-movie/components/GuessEmptyHint";
 import { GuessGameHeader } from "@/features/games/guess-movie/components/GuessGameHeader";
 import { GuessToolbar } from "@/features/games/guess-movie/components/GuessToolbar";
 import { DebugAnswer } from "@/features/games/guess-movie/components/DebugAnswer";
@@ -35,7 +38,7 @@ export const GuessGameScreen = ({
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-8 sm:py-10">
-      <BackLink href={backHref} label={genreName ? "Genres" : "Games"} />
+      <GameTopBar backHref={backHref} backLabel={genreName ? "Genres" : "Games"} />
       <GuessGameHeader genreName={genreName} />
 
       <QueryWrapper
@@ -65,7 +68,7 @@ export const GuessGameScreen = ({
                 onHint={() => setHintOpen(true)}
                 onGiveUp={game.giveUp}
               />
-              {game.error && <span className="text-sm text-fr-close">{game.error}</span>}
+              <ErrorState variant="inline" message={game.error} />
               {game.hints.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {game.hints.map((h) => (
@@ -83,7 +86,7 @@ export const GuessGameScreen = ({
                 target={game.target}
                 detail={
                   game.status === "won"
-                    ? `Solved in ${game.guesses.length} ${game.guesses.length === 1 ? "guess" : "guesses"}`
+                    ? `Solved in ${game.guesses.length} ${plural(game.guesses.length, "guess", "guesses")}`
                     : undefined
                 }
                 points={game.awardedPoints}
@@ -96,11 +99,7 @@ export const GuessGameScreen = ({
             <GuessGrid guesses={game.guesses} />
           </div>
 
-          {game.guesses.length === 0 && !game.ended && (
-            <p className="mt-10 text-center text-sm text-fr-fg-subtle">
-              Guess your first movie!
-            </p>
-          )}
+          {game.guesses.length === 0 && !game.ended && <GuessEmptyHint />}
         </>
       </QueryWrapper>
 

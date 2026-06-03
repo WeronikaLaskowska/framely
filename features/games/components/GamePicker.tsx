@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Card } from "@/common/ui/Card";
 import { DisplayHeading } from "@/common/typography/DisplayHeading";
+import { MutedText } from "@/common/typography/MutedText";
 import { Counter } from "@/common/typography/Counter";
 import { Timecode } from "@/common/typography/Timecode";
 
@@ -41,7 +42,7 @@ export function GamePicker<T extends string>({
             <DisplayHeading as="h3" className="text-2xl">
               {opt.label}
             </DisplayHeading>
-            <p className="mt-2 text-sm text-fr-fg-muted">{opt.blurb}</p>
+            <MutedText className="mt-2">{opt.blurb}</MutedText>
             <Counter className="mt-4 block">{opt.footer}</Counter>
           </Card>
         ))}

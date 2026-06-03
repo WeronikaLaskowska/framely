@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import type { HiloCard } from "@/models/hilo";
 import type { MetricConfig } from "@/features/games/higher-lower/data/metrics";
 import { Button } from "@/common/ui/Button";
+import { Caption } from "@/common/typography/Caption";
 import { HiloPanel } from "@/features/games/higher-lower/components/HiloPanel";
 
 type HiloBoardProps = {
@@ -22,9 +23,7 @@ export const HiloBoard = ({
   onGuess,
 }: HiloBoardProps) => (
   <div className="mt-8">
-    <p className="text-center text-xs uppercase tracking-[0.25em] text-fr-fg-subtle">
-      Comparing {cfg.label}
-    </p>
+    <Caption className="tracking-[0.25em]">Comparing {cfg.label}</Caption>
     <div className="mt-4 grid grid-cols-2 gap-4 md:gap-6">
       <HiloPanel card={current} caption="known" valueText={cfg.format(cfg.value(current))} />
       <HiloPanel

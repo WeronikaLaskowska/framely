@@ -1,11 +1,14 @@
 "use client";
 
 import { useReviewGame } from "@/features/games/review/hooks/useReviewGame";
-import { BackLink } from "@/common/ui/BackLink";
-import { Counter } from "@/common/typography/Counter";
+import { plural } from "@/lib/format";
 import { QueryWrapper } from "@/common/ui/QueryWrapper";
+import { ErrorState } from "@/common/ui/ErrorState";
 import { MovieSearch } from "@/features/games/components/MovieSearch";
 import { ResultBanner } from "@/features/games/components/ResultBanner";
+import { GameTopBar } from "@/features/games/components/GameTopBar";
+import { GuessesLeft } from "@/features/games/components/GuessesLeft";
+import { GiveUpButton } from "@/features/games/components/GiveUpButton";
 import { ReviewGameHeader } from "@/features/games/review/components/ReviewGameHeader";
 import { ReviewClueCard } from "@/features/games/review/components/ReviewClueCard";
 
@@ -14,14 +17,10 @@ export const ReviewGameScreen = () => {
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-8 sm:py-10">
-      <div className="flex items-center justify-between gap-4">
-        <BackLink href="/games" label="Games" />
-        {game.status === "playing" && (
-          <Counter>
-            {game.attemptsLeft} {game.attemptsLeft === 1 ? "guess" : "guesses"} left
-          </Counter>
-        )}
-      </div>
+      <GameTopBar
+        backHref="/games"
+        right={game.status === "playing" && <GuessesLeft count={game.attemptsLeft} />}
+      />
 
       <ReviewGameHeader />
 
@@ -46,19 +45,8 @@ export const ReviewGameScreen = () => {
                 excludeIds={game.guessedIds}
                 placeholder="Name the reviewed film…"
               />
-              {game.error && <span className="text-sm text-fr-close">{game.error}</span>}
-              {game.moreCluesLeft && (
-                <p className="text-center text-xs uppercase tracking-widest text-fr-fg-subtle">
-                  A wrong guess uncovers another review
-                </p>
-              )}
-              <button
-                type="button"
-                onClick={game.giveUp}
-                className="mx-auto text-xs uppercase tracking-widest text-fr-fg-subtle transition-colors hover:text-fr-close"
-              >
-                Give up
-              </button>
+              <ErrorState variant="inline" message={game.error} />
+              <GiveUpButton onClick={game.giveUp} />
             </div>
           ) : (
             game.target && (
@@ -67,7 +55,7 @@ export const ReviewGameScreen = () => {
                 target={game.target}
                 detail={
                   game.status === "won"
-                    ? `Solved with ${game.wrong} ${game.wrong === 1 ? "miss" : "misses"}`
+                    ? `Solved with ${game.wrong} ${plural(game.wrong, "miss", "misses")}`
                     : undefined
                 }
                 points={game.awardedPoints}
